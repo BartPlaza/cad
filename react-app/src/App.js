@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import 'bulma/css/bulma.css'
+import './App.scss';
+
 import Navbar from "./components/Navigation/Navbar";
 
 class App extends Component {

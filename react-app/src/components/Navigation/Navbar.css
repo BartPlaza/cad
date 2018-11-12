@@ -2,9 +2,10 @@
     background-color: grey
 }
 
-.navbar-item:hover
+.navbar .navbar-item:hover
 {
-    background-color: grey !important;
+    background-color: grey;
+    color: lightgrey;
 }
 
 .navbar-menu .navbar-item {

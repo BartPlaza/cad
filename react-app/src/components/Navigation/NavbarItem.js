@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 const navbarItem = (props) => {
     const {name} = props;
@@ -8,6 +9,10 @@ const navbarItem = (props) => {
             {name}
         </a>
     )
+};
+
+navbarItem.propTypes = {
+    name: PropTypes.string
 };
 
 export default navbarItem;
