@@ -1,0 +1,45 @@
+.navbar {
+    background-color: grey
+}
+
+.navbar-item:hover
+{
+    background-color: grey !important;
+}
+
+.navbar-menu .navbar-item {
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.navbar-menu.is-active > .navbar-item {
+    color: grey;
+}
+
+.navbar-item {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.navbar.is-fixed-top {
+    transition: all 0.7s;
+    top: 0;
+    opacity: 1;
+}
+
+.navbar.is-fixed-top.is-rolled {
+    top: -100px;
+    opacity: 0;
+}
+
+.navbar-burger {
+    height: auto;
+}
+
+.navbar-item .icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.25rem;
+}
+
