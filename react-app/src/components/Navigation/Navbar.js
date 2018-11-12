@@ -1,5 +1,7 @@
-import React from 'react'
-import './Navbar.css'
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import './Navbar.css';
 import NavbarBrand from "./NavbarBrand";
 import NavbarItem from "./NavbarItem";
 import NavbarBurger from "./NavbarBurger";
@@ -51,6 +53,7 @@ class Navbar extends React.Component {
     render() {
 
         const {isOpen, isVisible} = this.state;
+        const {user} = this.props;
         const navbarClasses = joinClasses(['navbar', 'is-fixed-top', isVisible ? null : 'is-rolled']);
         const navbarMenuClasses = joinClasses(['navbar-menu', isOpen ? 'is-active' : null]);
 
@@ -65,8 +68,11 @@ class Navbar extends React.Component {
                         <div className="navbar-end">
                             <NavbarItem name='Home'/>
                             <NavbarItem name='Else'/>
-                            <NavbarItem name='Home'/>
-                            <NavbarUser name='Bart'/>
+                            {user.isLoggedIn ? (
+                                <NavbarUser name={'Bart'}/>
+                            ) : (
+                                <NavbarItem name='Login'/>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -75,4 +81,12 @@ class Navbar extends React.Component {
     }
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  user: PropTypes.object
+};
+
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+export default connect(mapStateToProps)(Navbar);
