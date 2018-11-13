@@ -1,1 +1,12 @@
 @import "./scss/bulma";
+
+.App {
+  min-height: 100vh;
+  padding-top: $navbar-height;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+}

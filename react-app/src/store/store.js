@@ -3,11 +3,13 @@ import rootReducer from "./reducer";
 import {devToolsEnhancer} from "redux-devtools-extension";
 import {loadState, saveState} from "./localStorage";
 
-const persistedState = loadState();
+const configureStore = () => {
+    const persistedState = loadState();
+    const store = createStore(rootReducer, persistedState, devToolsEnhancer());
+    store.subscribe(() => {
+        saveState(store.getState())
+    });
+    return store;
+};
 
-const store = createStore(rootReducer, persistedState, devToolsEnhancer());
-store.subscribe(() => {
-   saveState(store.getState())
-});
-
-export default store;
+export default configureStore;

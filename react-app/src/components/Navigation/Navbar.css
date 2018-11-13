@@ -2,14 +2,7 @@
     background-color: grey
 }
 
-.navbar .navbar-item:hover
-{
-    background-color: grey;
-    color: lightgrey;
-}
-
 .navbar-menu .navbar-item {
-    color: #ffffff;
     text-transform: uppercase;
 }
 

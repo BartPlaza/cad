@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import './Navbar.css';
 import NavbarBrand from "./NavbarBrand";
@@ -61,17 +61,17 @@ class Navbar extends React.Component {
             <nav className={navbarClasses} role="navigation" aria-label="main navigation">
                 <div className="container">
                     <div className="navbar-brand">
-                        <NavbarBrand/>
+                        <NavbarBrand url={'/'}/>
                         <NavbarBurger updateOpen={this.updateOpen} isOpen={isOpen}/>
                     </div>
                     <div className={navbarMenuClasses}>
                         <div className="navbar-end">
-                            <NavbarItem name='Home'/>
-                            <NavbarItem name='Else'/>
+                            <NavbarItem name='Home' url={'/home'}/>
+                            <NavbarItem name='Else' url={'/else'}/>
                             {user.isLoggedIn ? (
                                 <NavbarUser name={'Bart'}/>
                             ) : (
-                                <NavbarItem name='Login'/>
+                                <NavbarItem name='Login' url={'/login'}/>
                             )}
                         </div>
                     </div>
@@ -82,7 +82,7 @@ class Navbar extends React.Component {
 }
 
 Navbar.propTypes = {
-  user: PropTypes.object
+    user: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
