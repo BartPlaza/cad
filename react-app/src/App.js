@@ -11,11 +11,9 @@ class App extends Component {
             <div className="App">
                 <Navbar/>
                 <section className="section main">
-                    <div className="content container">
-                        <Switch>
-                            <Route path='/login' component={AuthView}/>
-                        </Switch>
-                    </div>
+                    <Switch>
+                        <Route path='/login' component={AuthView}/>
+                    </Switch>
                 </section>
                 <Footer/>
             </div>

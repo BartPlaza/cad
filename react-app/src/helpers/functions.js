@@ -1,7 +1,7 @@
 //Generate classes list string from array of class
 export const joinClasses = (names) => {
-    names.forEach((name) => {
-        return '.' + name;
+    names = names.filter((name) => {
+        return name !== null;
     });
     return names.join(' ')
 };
