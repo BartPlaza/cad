@@ -12,7 +12,8 @@ class LoginForm extends React.Component
         errors: PropTypes.object.isRequired,
         sendAction: PropTypes.func.isRequired,
         updateAction: PropTypes.func.isRequired,
-        resetAction: PropTypes.func.isRequired
+        resetAction: PropTypes.func.isRequired,
+        isSending: PropTypes.bool
     };
 
     static fields = {
@@ -21,12 +22,16 @@ class LoginForm extends React.Component
     };
 
     render() {
-        const {fields, errors, sendAction, updateAction, resetAction} = this.props;
+        const {fields, errors, sendAction, updateAction, resetAction, isSending} = this.props;
 
         return (
-            <FormWrapper title="Login form" subtitle="Please fill the form to login">
+            <FormWrapper title="Login form" subtitle="Please fill the form to login" isSending={isSending}>
                 <TextField label="name" placeholder="enter name..." value={fields.name} updateAction={updateAction}
                            error={errors.name}/>
+                <TextField label="surname" placeholder="enter surname..." value={fields.surname}
+                           updateAction={updateAction}/>
+                <TextField label="surname" placeholder="enter surname..." value={fields.surname}
+                           updateAction={updateAction}/>
                 <TextField label="surname" placeholder="enter surname..." value={fields.surname}
                            updateAction={updateAction}/>
                 <div className="field is-grouped">

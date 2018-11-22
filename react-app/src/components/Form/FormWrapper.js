@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Loader from "../Loader/Loader";
+import './FormWrapper.scss';
 
 const formWrapper = (props) => {
-    const {title, subtitle, footer} = props;
+    const {title, subtitle, footer, isSending} = props;
     return (
         <div className="columns is-centered">
             <div className="column is-6">
@@ -10,9 +12,13 @@ const formWrapper = (props) => {
                     <div className="card-content">
                         {title && <p className="title">Title</p>}
                         {subtitle && <p className="subtitle">Subtitle</p>}
-                        <form action="">
-                            {props.children}
-                        </form>
+                        {isSending ? (
+                            <Loader/>
+                        ):(
+                            <form action="">
+                                {props.children}
+                            </form>
+                        )}
                     </div>
                     {footer && <footer className="card-footer">
                         <p className="card-footer-item">
@@ -28,13 +34,15 @@ const formWrapper = (props) => {
 formWrapper.propTypes = {
     title: PropTypes.string,
     subtitle: PropTypes.string,
-    footer: PropTypes.string
+    footer: PropTypes.string,
+    isSending: PropTypes.bool
 };
 
 formWrapper.defaultProps = {
     title: '',
     subtitle: '',
-    footer: ''
+    footer: '',
+    isSending: false
 };
 
 export default formWrapper;

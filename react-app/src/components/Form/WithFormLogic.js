@@ -5,15 +5,21 @@ const withFormLogic = (Component, fields) => {
     class FormLogic extends React.Component {
         state = {
             fields: fields,
-            errors: {
-                name: 'Validation error'
-            },
+            errors: {},
             isSending: false
         };
 
         sendAction = (event) => {
             event.preventDefault();
+            this.setState({
+                isSending: true
+            });
             console.log(JSON.stringify(this.state.fields));
+            setTimeout(() => {
+               this.setState({
+                   isSending: false
+               })
+            },4000);
         };
 
         updateAction = (name, value) => {
@@ -44,6 +50,7 @@ const withFormLogic = (Component, fields) => {
                     updateAction={this.updateAction}
                     resetAction={this.resetAction}
                     errors={this.state.errors}
+                    isSending={this.state.isSending}
                 />
             )
         }
