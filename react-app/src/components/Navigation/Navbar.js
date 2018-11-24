@@ -69,7 +69,7 @@ class Navbar extends React.Component {
                             <NavbarItem name='Home' url={'/home'}/>
                             <NavbarItem name='Else' url={'/else'}/>
                             {user.isLoggedIn ? (
-                                <NavbarUser name={'Bart'}/>
+                                <NavbarUser name={'Bart'} url={'/profile'}/>
                             ) : (
                                 <NavbarItem name='Login' url={'/login'}/>
                             )}

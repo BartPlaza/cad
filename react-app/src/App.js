@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom'
 import AuthView from './components/Views/Auth';
 import ProfileView from "./components/Views/Profile";
+import TestView from "./components/Views/Test";
 import './App.scss';
 import Navbar from "./components/Navigation/Navbar";
 import Footer from "./components/Footer/Footer";
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
+import PrivateRoute from "./components/Routing/PrivateRoute";
 
 class App extends Component {
     render() {
@@ -18,7 +20,8 @@ class App extends Component {
                             <CSSTransition key={location.key} timeout={300} classNames='fade'>
                                 <Switch location={location}>
                                     <Route path='/login' component={AuthView}/>
-                                    <Route path='/home' component={ProfileView}/>
+                                    <Route path='/else' component={TestView}/>
+                                    <PrivateRoute path='/profile' component={ProfileView}/>
                                 </Switch>
                             </CSSTransition>
                         </TransitionGroup>

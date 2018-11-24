@@ -2,19 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/store';
 import {Provider} from 'react-redux';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import './index.css';
 import App from './App';
+import TranslationProvider from './I18n/TranslationsProvider';
 import * as serviceWorker from './serviceWorker';
 
 const store = configureStore();
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Provider store={store}>
-            <App/>
-        </Provider>
-    </BrowserRouter>,
+    <Provider store={store}>
+        <TranslationProvider>
+            <BrowserRouter>
+                <App/>
+            </BrowserRouter>
+        </TranslationProvider>
+    </Provider>,
     document.getElementById('root')
 );
 
