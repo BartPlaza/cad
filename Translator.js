@@ -11,8 +11,14 @@ class Translator {
         this.obj = JSON.parse(fs.readFileSync(path, 'utf8'));
     };
 
-    addTranslation(key, translation) {
+    checkTranslation(key) {
+        const keys = this._prepareKeys(key);
+        return keys.reduce((obj, key) => {
+            return (typeof obj == "undefined" || obj === null) ? obj : obj[key];
+        }, {...this.obj});
+    }
 
+    addTranslation(key, translation) {
         let obj = this.obj;
         const keys = this._prepareKeys(key);
         for (let i = 1; i <= keys.length; i++) {
@@ -28,7 +34,7 @@ class Translator {
         }
     };
 
-    _prepareKeys(key){
+    _prepareKeys(key) {
         let keys = key.split('.');
         keys.map((key) => {
             return key.toLowerCase();

@@ -1,5 +1,6 @@
 const Translator = require('./Translator');
 
+
 const params = process.argv;
 
 const config = [
