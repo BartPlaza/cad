@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loader from "../Loader/Loader";
+import Loader from "../../Loader/Loader";
 
 const formWrapper = (props) => {
     const {title, subtitle, footer, isSending} = props;

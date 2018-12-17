@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import FormWrapper from "./FormWrapper";
-import TextField from "./TextField";
-import FormButton from "./FormButton";
+import FormWrapper from "./Components/FormWrapper";
+import TextField from "./Components/TextField";
+import PasswordField from "./Components/PasswordField";
+import FormButton from "./Components/FormButton";
 import {API} from '../API/config';
 import {useRedux} from "../../index";
 
 
-const LoginForm = ({history}) => {
+const LoginForm = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -39,7 +40,7 @@ const LoginForm = ({history}) => {
                        updateAction={setEmail}
                        error={errors.email}
             />
-            <TextField label="password"
+            <PasswordField label="password"
                        placeholder="enter password..."
                        value={password}
                        updateAction={setPassword}
@@ -47,7 +48,6 @@ const LoginForm = ({history}) => {
             />
             <div className="field is-grouped">
                 <FormButton name="Submit" action={submitAction}/>
-                <FormButton name="Reset" action={submitAction} format="is-default"/>
             </div>
         </FormWrapper>
     )

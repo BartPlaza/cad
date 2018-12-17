@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {joinClasses} from "../../helpers/functions";
+import {joinClasses} from "../../../helpers/functions";
 
-const textField = (props) => {
+const passwordField = (props) => {
     const {label, placeholder, value, updateAction, error} = props;
     const classes = joinClasses(['input', error ? 'is-danger' : null]);
     return (
@@ -10,7 +10,7 @@ const textField = (props) => {
             <label className="label">{label}</label>
             <div className="control">
                 <input className={classes}
-                       type="text"
+                       type="password"
                        placeholder={placeholder}
                        value={value}
                        onChange={(event) => updateAction(event.target.value)}
@@ -21,7 +21,7 @@ const textField = (props) => {
     )
 };
 
-textField.propTypes = {
+passwordField.propTypes = {
     label: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
@@ -29,10 +29,10 @@ textField.propTypes = {
     error: PropTypes.array
 };
 
-textField.defaultProps = {
+passwordField.defaultProps = {
     label: '',
     placeholder: '',
     value: '',
 };
 
-export default textField;
+export default passwordField;

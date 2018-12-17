@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {joinClasses} from "../../helpers/functions";
+import {joinClasses} from "../../../helpers/functions";
 
 const formButton = (props) => {
 
