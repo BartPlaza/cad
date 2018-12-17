@@ -7,10 +7,12 @@ import {API} from '../API/config';
 import {useRedux} from "../../index";
 
 
-const loginForm = () => {
+const registerForm = () => {
 
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [password_confirmation, setPasswordConfirmation] = useState('');
     const [errors, setErrors] = useState({});
     const [isSending, setIsSending] = useState(false);
 
@@ -20,7 +22,7 @@ const loginForm = () => {
         event.preventDefault();
         setIsSending(true);
         setErrors({});
-        API.post('auth/login', {email, password})
+        API.post('auth/register', {name, email, password, password_confirmation})
             .then((response) => {
                 dispatch.login(response.data);
             })
@@ -34,6 +36,12 @@ const loginForm = () => {
 
     return (
         <FormWrapper title="Login form" subtitle="Please fill the form to login" isSending={isSending}>
+            <TextField label="name"
+                       placeholder="enter name..."
+                       value={name}
+                       updateAction={setName}
+                       error={errors.name}
+            />
             <TextField label="email"
                        placeholder="enter email..."
                        value={email}
@@ -41,10 +49,16 @@ const loginForm = () => {
                        error={errors.email}
             />
             <PasswordField label="password"
-                       placeholder="enter password..."
-                       value={password}
-                       updateAction={setPassword}
-                       error={errors.password}
+                           placeholder="enter password..."
+                           value={password}
+                           updateAction={setPassword}
+                           error={errors.password}
+            />
+            <PasswordField label="password Confirmation"
+                           placeholder="confirm password..."
+                           value={password_confirmation}
+                           updateAction={setPasswordConfirmation}
+                           error={errors.password_confirmation}
             />
             <div className="field is-grouped">
                 <FormButton name="Submit" action={submitAction}/>
@@ -53,4 +67,4 @@ const loginForm = () => {
     )
 };
 
-export default loginForm;
+export default registerForm;

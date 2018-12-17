@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom'
 import AuthView from './components/Views/Auth';
+import RegisterView from './components/Views/Register';
 import ProfileView from "./components/Views/Profile";
 import TestView from "./components/Views/Test";
 import ErrorView from "./components/Views/Error";
@@ -21,6 +22,7 @@ class App extends Component {
                             <CSSTransition key={location.key} timeout={300} classNames='fade'>
                                 <Switch location={location}>
                                     <Route path='/login' component={AuthView}/>
+                                    <Route path='/register' component={RegisterView}/>
                                     <Route path='/else' component={TestView}/>
                                     <PrivateRoute path='/profile' component={ProfileView}/>
                                     <Route path='/something_went_wrong' component={ErrorView}/>
