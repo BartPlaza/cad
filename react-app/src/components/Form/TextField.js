@@ -13,7 +13,7 @@ const textField = (props) => {
                        type="text"
                        placeholder={placeholder}
                        value={value}
-                       onChange={(event) => updateAction(label, event.target.value)}
+                       onChange={(event) => updateAction(event.target.value)}
                 />
             </div>
             {error && <p className="help is-danger">{error}</p>}
@@ -26,14 +26,13 @@ textField.propTypes = {
     placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
     updateAction: PropTypes.func.isRequired,
-    error: PropTypes.string
+    error: PropTypes.array
 };
 
 textField.defaultProps = {
     label: '',
     placeholder: '',
     value: '',
-    error: ''
 };
 
 export default textField;

@@ -1,12 +1,15 @@
 import React from 'react'
-import { t } from '../../helpers/I18n';
 
-const testView = () => {
-    return (
-        <div className="container">
-            {t('test')}
-        </div>
-    )
-};
+class TestView extends React.Component {
 
-export default testView;
+
+    render() {
+        return (
+            <div className="container">
+                <h1 className="title">To jest title</h1>
+            </div>
+        )
+    }
+}
+
+export default TestView;

@@ -2,7 +2,7 @@ version: "3"
 
 services:
   node-service:
-    image: node:latest
+    image: node:10
     container_name: node
     volumes:
     - ./:/usr/src/react-boilerplate

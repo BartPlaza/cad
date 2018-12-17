@@ -1,46 +1,56 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 import FormWrapper from "./FormWrapper";
 import TextField from "./TextField";
 import FormButton from "./FormButton";
-import withFormLogic from "./WithFormLogic";
+import {API} from '../API/config';
+import {useRedux} from "../../index";
 
-class LoginForm extends React.Component
-{
-    static propTypes = {
-        fields: PropTypes.object.isRequired,
-        errors: PropTypes.object.isRequired,
-        sendAction: PropTypes.func.isRequired,
-        updateAction: PropTypes.func.isRequired,
-        resetAction: PropTypes.func.isRequired,
-        isSending: PropTypes.bool
+
+const LoginForm = ({history}) => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState({});
+    const [isSending, setIsSending] = useState(false);
+
+    const [user, dispatch] = useRedux('user');
+
+    const submitAction = (event) => {
+        event.preventDefault();
+        setIsSending(true);
+        setErrors({});
+        API.post('auth/login', {email, password})
+            .then((response) => {
+                dispatch.login(response.data.meta.token);
+            })
+            .catch((error) => {
+                setErrors(error.response.data.errors);
+            })
+            .then(() => {
+                setIsSending(false);
+            });
     };
 
-    static fields = {
-        name: '',
-        surname: ''
-    };
+    return (
+        <FormWrapper title="Login form" subtitle="Please fill the form to login" isSending={isSending}>
+            <TextField label="email"
+                       placeholder="enter email..."
+                       value={email}
+                       updateAction={setEmail}
+                       error={errors.email}
+            />
+            <TextField label="password"
+                       placeholder="enter password..."
+                       value={password}
+                       updateAction={setPassword}
+                       error={errors.password}
+            />
+            <div className="field is-grouped">
+                <FormButton name="Submit" action={submitAction}/>
+                <FormButton name="Reset" action={submitAction} format="is-default"/>
+            </div>
+        </FormWrapper>
+    )
+};
 
-    render() {
-        const {fields, errors, sendAction, updateAction, resetAction, isSending} = this.props;
-
-        return (
-            <FormWrapper title="Login form" subtitle="Please fill the form to login" isSending={isSending}>
-                <TextField label="name" placeholder="enter name..." value={fields.name} updateAction={updateAction}
-                           error={errors.name}/>
-                <TextField label="surname" placeholder="enter surname..." value={fields.surname}
-                           updateAction={updateAction}/>
-                <TextField label="surname" placeholder="enter surname..." value={fields.surname}
-                           updateAction={updateAction}/>
-                <TextField label="surname" placeholder="enter surname..." value={fields.surname}
-                           updateAction={updateAction}/>
-                <div className="field is-grouped">
-                    <FormButton name="Submit" action={sendAction}/>
-                    <FormButton name="Reset" action={resetAction} format="is-default"/>
-                </div>
-            </FormWrapper>
-        )
-    }
-}
-
-export default withFormLogic(LoginForm, LoginForm.fields);
+export default LoginForm;
