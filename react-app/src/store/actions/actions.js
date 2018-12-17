@@ -3,7 +3,7 @@ import * as localeActions from './locale';
 
 const setUpActionDispatchers = (store) => ({
     'user': {
-        login: (token) => store.dispatch(userActions.login(token)),
+        login: (payload) => store.dispatch(userActions.login(payload)),
         logout: () => store.dispatch(userActions.logout()),
         setToken: (token) => store.dispatch(userActions.setToken(token))
     },

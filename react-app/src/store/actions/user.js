@@ -1,8 +1,8 @@
 import * as actionTypes from './actionTypes';
 
-export const login = (token) => ({
+export const login = (payload) => ({
     type: actionTypes.LOGIN,
-    token
+    payload
 });
 
 export const logout = () => ({

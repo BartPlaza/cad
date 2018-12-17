@@ -21,7 +21,7 @@ const LoginForm = ({history}) => {
         setErrors({});
         API.post('auth/login', {email, password})
             .then((response) => {
-                dispatch.login(response.data.meta.token);
+                dispatch.login(response.data);
             })
             .catch((error) => {
                 setErrors(error.response.data.errors);

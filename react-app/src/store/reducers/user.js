@@ -2,7 +2,9 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoggedIn: false,
-    token: null
+    token: null,
+    name: null,
+    email: null
 };
 
 const userReducer = (state = initialState, action) => {
@@ -10,12 +12,16 @@ const userReducer = (state = initialState, action) => {
         case actionTypes.LOGIN:
             return {
                 isLoggedIn: true,
-                token: action.token
+                token: action.payload.meta.token,
+                name: action.payload.data.name,
+                email: action.payload.data.email
             };
         case actionTypes.LOGOUT:
             return {
                 isLoggedIn: false,
-                token: null
+                token: null,
+                name: null,
+                email: null
             };
         case actionTypes.SET_TOKEN:
             return {
