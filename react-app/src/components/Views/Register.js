@@ -1,12 +1,11 @@
 import React from 'react'
 import RegisterForm from "../Form/RegisterForm";
-import { useRedux } from "../../index";
 import {Redirect} from "react-router-dom";
-
+import {useRedux} from "../../index";
 
 const registerView = () => {
 
-    const [user, dispatch] = useRedux('user');
+    const [user,] = useRedux('user');
 
     return (
         <React.Fragment>

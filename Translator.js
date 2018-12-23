@@ -44,7 +44,6 @@ class Translator {
 
     writeFile() {
         let json = JSON.stringify(this.obj, null, 4);
-        console.log(json);
         fs.writeFile(this.path, json, 'utf8', (err) => {
             if (err) throw err;
             console.log('DONE');

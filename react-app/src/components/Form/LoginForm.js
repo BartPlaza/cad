@@ -7,14 +7,14 @@ import {API} from '../API/config';
 import {useRedux} from "../../index";
 
 
-const loginForm = () => {
+const loginForm = ({history}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [isSending, setIsSending] = useState(false);
 
-    const [user, dispatch] = useRedux('user');
+    const [, dispatch] = useRedux('user');
 
     const submitAction = (event) => {
         event.preventDefault();
@@ -23,9 +23,9 @@ const loginForm = () => {
         API.post('auth/login', {email, password})
             .then((response) => {
                 dispatch.login(response.data);
+                history.goBack();
             })
             .catch((error) => {
-                console.log(error)
                 setErrors(error.response.data.errors);
             })
             .then(() => {
@@ -42,10 +42,10 @@ const loginForm = () => {
                        error={errors.email}
             />
             <PasswordField label="password"
-                       placeholder="enter password..."
-                       value={password}
-                       updateAction={setPassword}
-                       error={errors.password}
+                           placeholder="enter password..."
+                           value={password}
+                           updateAction={setPassword}
+                           error={errors.password}
             />
             <div className="field is-grouped">
                 <FormButton name="Submit" action={submitAction}/>

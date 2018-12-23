@@ -9,32 +9,27 @@ const configureApi = (store) => {
     API.interceptors.request.use((request) => {
         const token = store.getState().user.token;
         if (token) {
-            request.headers.Autyhorization = 'Bearer ' + token;
+            request.headers.Authorization = 'Bearer ' + token;
         }
         return request;
     });
 
     API.interceptors.response.use((response) => {
-        const token = response.headers.authorization;
-        if(token){
-            store.dispatch(setToken(token.split(' ').pop()));
+        const tokenHeader = response.headers.authorization;
+        const extractToken = (tokenHeader) => tokenHeader.split(' ').pop();
+
+        if (tokenHeader) {
+            const token = extractToken(tokenHeader);
+            store.dispatch(setToken(token));
         }
         return response;
     }, (error) => {
-        //handleErrors(error);
+
+        if (error.response.status === 401) {
+            store.dispatch(logout());
+        }
         return Promise.reject(error)
     });
-
-};
-
-const handleErrors = (error) => {
-};
-
-
-
-const forceLoginAgain = () => {
-    logout();
-    window.location.href = '/login'
 };
 
 export default configureApi;

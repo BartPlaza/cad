@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react'
-import {useRedux} from '../../index';
 import {API} from "../API/config";
+import {useRedux} from "../../index";
 
 const profileView = () => {
 
-    const [user, dispatch] = useRedux('user');
+    const [, dispatch] = useRedux('user');
 
     useEffect(() => {
-        console.log(user);
         API.get('auth/me')
             .then((response) => {
             })

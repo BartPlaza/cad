@@ -6,7 +6,5 @@ const translations = {
     en
 };
 
-console.log(translations);
-
 export default translations;
 

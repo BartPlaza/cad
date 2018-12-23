@@ -19,11 +19,11 @@ class App extends Component {
                     <Navbar/>
                     <section className="section main">
                         <TransitionGroup>
-                            <CSSTransition key={location.key} timeout={300} classNames='fade'>
-                                <Switch location={location}>
+                            <CSSTransition key={location.key} timeout={600} classNames='fade'>
+                                <Switch>
                                     <Route path='/login' component={AuthView}/>
                                     <Route path='/register' component={RegisterView}/>
-                                    <Route path='/else' component={TestView}/>
+                                    <PrivateRoute path='/else' component={TestView}/>
                                     <PrivateRoute path='/profile' component={ProfileView}/>
                                     <Route path='/something_went_wrong' component={ErrorView}/>
                                 </Switch>

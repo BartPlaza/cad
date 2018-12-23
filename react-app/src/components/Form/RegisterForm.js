@@ -16,7 +16,7 @@ const registerForm = () => {
     const [errors, setErrors] = useState({});
     const [isSending, setIsSending] = useState(false);
 
-    const [user, dispatch] = useRedux('user');
+    const [, dispatch] = useRedux('user');
 
     const submitAction = (event) => {
         event.preventDefault();

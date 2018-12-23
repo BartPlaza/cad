@@ -1,20 +1,19 @@
 import React from 'react'
 import LoginForm from "../Form/LoginForm";
-import { useRedux } from "../../index";
 import {Redirect} from "react-router-dom";
+import {useRedux} from "../../index";
 
+const authView = ({history}) => {
 
-const authView = () => {
-
-    const [user, dispatch] = useRedux('user');
+    const [user,] = useRedux('user');
 
     return (
         <React.Fragment>
-        {user.isLoggedIn ? (
+            {user.isLoggedIn ? (
                 <Redirect to="/profile"/>
             ) : (
                 <div className="container">
-                    <LoginForm/>
+                    <LoginForm history={history}/>
                 </div>
             )}
         </React.Fragment>
