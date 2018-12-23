@@ -25,6 +25,7 @@ const loginForm = () => {
                 dispatch.login(response.data);
             })
             .catch((error) => {
+                console.log(error)
                 setErrors(error.response.data.errors);
             })
             .then(() => {

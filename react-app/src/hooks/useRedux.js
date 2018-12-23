@@ -4,12 +4,12 @@ const useRedux = state => {
     const [data, setData] = useState(store.getState()[state]);
 
     useEffect(() => {
-        store.subscribe(() => {
+        const unsubscribe = store.subscribe(() => {
             setData(store.getState()[state]);
         });
 
         // Unsubscribe
-        return store.subscribe(() => {});
+        return unsubscribe();
     });
 
     return [data, actions[state]];
