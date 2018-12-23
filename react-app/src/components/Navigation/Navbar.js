@@ -32,6 +32,12 @@ class Navbar extends React.Component {
         }));
     };
 
+    closeMenu = () => {
+        this.setState({
+            isOpen: false
+        });
+    };
+
     updateVisibility = () => {
         const scrollLevel = Math.abs(window.scrollY - this.state.scrollY);
         if (scrollLevel > 30) {
@@ -66,14 +72,14 @@ class Navbar extends React.Component {
                     </div>
                     <div className={navbarMenuClasses}>
                         <div className="navbar-end">
-                            <NavbarItem name='Home' url={'/home'} updateOpen={this.updateOpen}/>
-                            <NavbarItem name='Else' url={'/else'} updateOpen={this.updateOpen}/>
+                            <NavbarItem name='Home' url={'/home'} closeMenu={this.closeMenu}/>
+                            <NavbarItem name='Else' url={'/else'} closeMenu={this.closeMenu}/>
                             {user.isLoggedIn ? (
-                                <NavbarUser name={user.name} url={'/profile'} updateOpen={this.updateOpen}/>
+                                <NavbarUser name={user.name} url={'/profile'} closeMenu={this.closeMenu}/>
                             ) : (
-                                <NavbarItem name='Login' url={'/login'} updateOpen={this.updateOpen}/>
+                                <NavbarItem name='Login' url={'/login'} closeMenu={this.closeMenu}/>
                             )}
-                            {!user.isLoggedIn && <NavbarItem name='Register' url={'/register'} updateOpen={this.updateOpen}/>}
+                            {!user.isLoggedIn && <NavbarItem name='Register' url={'/register'} closeMenu={this.closeMenu}/>}
                         </div>
                     </div>
                 </div>

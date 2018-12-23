@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 
 const navbarUser = (props) => {
 
-    const {name, url, updateOpen} = props;
+    const {name, url, closeMenu} = props;
     return (
         // eslint-disable-next-line
-        <NavLink to={url} className="navbar-item is-size-5" onClick={updateOpen}>
+        <NavLink to={url} className="navbar-item is-size-5" onClick={closeMenu}>
             <span className="icon">
                 <i className="fas fa-user-circle"/>
             </span>
@@ -21,7 +21,7 @@ const navbarUser = (props) => {
 navbarUser.propTypes = {
     name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    updateOpen: PropTypes.func
+    closeMenu: PropTypes.func
 };
 
 navbarUser.defaultProps = {
