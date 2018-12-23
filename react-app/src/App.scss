@@ -9,19 +9,38 @@
 
 .main {
   flex: 1;
+  position: relative;
+  padding: 0;
+  margin: 3rem 1.5rem;
 }
 
+.pages-wrapper{
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-bottom: 70px;
+}
+
+.fade-appear,
 .fade-enter {
   opacity: 0;
 }
 
+.fade-appear-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
+
 .fade-enter.fade-enter-active {
   opacity: 1;
-  transition: opacity 300ms ease-in;
+  transition: opacity 150ms ease-in-out 150ms;
 }
 
 .fade-exit {
-  opacity: 0;
-  display: none;
+  opacity: 1;
 }
 
+.fade-exit.fade-exit-active{
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+}

@@ -66,14 +66,14 @@ class Navbar extends React.Component {
                     </div>
                     <div className={navbarMenuClasses}>
                         <div className="navbar-end">
-                            <NavbarItem name='Home' url={'/home'}/>
-                            <NavbarItem name='Else' url={'/else'}/>
+                            <NavbarItem name='Home' url={'/home'} updateOpen={this.updateOpen}/>
+                            <NavbarItem name='Else' url={'/else'} updateOpen={this.updateOpen}/>
                             {user.isLoggedIn ? (
-                                <NavbarUser name={user.name} url={'/profile'}/>
+                                <NavbarUser name={user.name} url={'/profile'} updateOpen={this.updateOpen}/>
                             ) : (
-                                <NavbarItem name='Login' url={'/login'}/>
+                                <NavbarItem name='Login' url={'/login'} updateOpen={this.updateOpen}/>
                             )}
-                            {!user.isLoggedIn && <NavbarItem name='Register' url={'/register'}/>}
+                            {!user.isLoggedIn && <NavbarItem name='Register' url={'/register'} updateOpen={this.updateOpen}/>}
                         </div>
                     </div>
                 </div>

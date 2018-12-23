@@ -17,19 +17,19 @@ class App extends Component {
             <Route render={({location}) => (
                 <div className="App">
                     <Navbar/>
-                    <section className="section main">
-                        <TransitionGroup>
-                            <CSSTransition key={location.key} timeout={600} classNames='fade'>
-                                <Switch>
+                    <TransitionGroup className="section main">
+                        <CSSTransition key={location.key} timeout={300} classNames='fade' appear={true}>
+                            <section className="content pages-wrapper">
+                                <Switch location={location}>
                                     <Route path='/login' component={AuthView}/>
                                     <Route path='/register' component={RegisterView}/>
                                     <PrivateRoute path='/else' component={TestView}/>
                                     <PrivateRoute path='/profile' component={ProfileView}/>
                                     <Route path='/something_went_wrong' component={ErrorView}/>
                                 </Switch>
-                            </CSSTransition>
-                        </TransitionGroup>
-                    </section>
+                            </section>
+                        </CSSTransition>
+                    </TransitionGroup>
                     <Footer/>
                 </div>
             )}/>

@@ -2,17 +2,24 @@
     background-color: grey
 }
 
-.navbar-menu .navbar-item {
-    text-transform: uppercase;
+.navbar-menu {
+    padding: 0;
 }
 
-.navbar-menu.is-active > .navbar-item {
-    color: grey;
+.navbar-menu .navbar-item {
+    text-transform: uppercase;
+    background-color:  gray;
+}
+
+.navbar-menu.is-active .navbar-item {
+    border-top: 1px solid #ffffff;
 }
 
 .navbar-item {
+    display: flex;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    align-items: center;
 }
 
 .navbar.is-fixed-top {
