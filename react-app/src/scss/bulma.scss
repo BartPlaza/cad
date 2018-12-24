@@ -2,9 +2,14 @@ $navbar-height: 4rem;
 $navbar-item-color: #ffffff;
 $navbar-item-hover-color: lightgrey;
 $navbar-item-hover-background-color: grey;
+$navbar-dropdown-arrow: #ffffff;
+$navbar-dropdown-item-hover-color: lightgrey;
+$navbar-dropdown-item-hover-background-color: grey;
+
 
 $footer-background-color: #ffffff;
 $footer-padding: 10px;
+
 
 
 @import "../../node_modules/bulma/bulma";

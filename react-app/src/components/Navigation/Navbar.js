@@ -6,7 +6,9 @@ import NavbarBrand from "./NavbarBrand";
 import NavbarItem from "./NavbarItem";
 import NavbarBurger from "./NavbarBurger";
 import {joinClasses} from '../../helpers/functions';
-import NavbarUser from "./NavbarUser";
+import NavbarDropdown from "./NavbarDropdown";
+import {logout} from "../../store/actions/user";
+import NavbarButton from "./NavbarButton";
 
 class Navbar extends React.Component {
     constructor(props) {
@@ -38,6 +40,11 @@ class Navbar extends React.Component {
         });
     };
 
+    logoutAndClose = () => {
+        this.props.logout();
+        this.closeMenu();
+    };
+
     updateVisibility = () => {
         const scrollLevel = Math.abs(window.scrollY - this.state.scrollY);
         if (scrollLevel > 30) {
@@ -59,7 +66,7 @@ class Navbar extends React.Component {
     render() {
 
         const {isOpen, isVisible} = this.state;
-        const {user} = this.props;
+        const {user, logout} = this.props;
         const navbarClasses = joinClasses(['navbar', 'is-fixed-top', isVisible ? null : 'is-rolled']);
         const navbarMenuClasses = joinClasses(['navbar-menu', isOpen ? 'is-active' : null]);
 
@@ -75,7 +82,10 @@ class Navbar extends React.Component {
                             <NavbarItem name='Home' url={'/home'} closeMenu={this.closeMenu}/>
                             <NavbarItem name='Else' url={'/else'} closeMenu={this.closeMenu}/>
                             {user.isLoggedIn ? (
-                                <NavbarUser name={user.name} url={'/profile'} closeMenu={this.closeMenu}/>
+                                <NavbarDropdown name={user.name} url={'/profile'}>
+                                    <NavbarItem name='My account' url={'/profile'} closeMenu={this.closeMenu}/>
+                                    <NavbarButton name='Logout' onClick={()=>console.log('asd')} closeMenu={this.logoutAndClose}/>
+                                </NavbarDropdown>
                             ) : (
                                 <NavbarItem name='Login' url={'/login'} closeMenu={this.closeMenu}/>
                             )}
@@ -96,4 +106,8 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = (dispatch) => ({
+    logout: () => dispatch(logout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
