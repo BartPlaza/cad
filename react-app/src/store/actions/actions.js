@@ -7,7 +7,9 @@ const setUpActionDispatchers = (store) => ({
         logout: () => store.dispatch(userActions.logout()),
         setToken: (token) => store.dispatch(userActions.setToken(token))
     },
-    'locale': localeActions
+    'locale': {
+         setLocale: (locale) => store.dispatch(localeActions.setLocale(locale))
+    }
 });
 
 export default setUpActionDispatchers;

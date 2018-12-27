@@ -1,113 +1,89 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import React, {useState, useEffect, useReducer} from 'react';
 import './Navbar.css';
 import NavbarBrand from "./NavbarBrand";
 import NavbarItem from "./NavbarItem";
 import NavbarBurger from "./NavbarBurger";
 import {joinClasses} from '../../helpers/functions';
 import NavbarDropdown from "./NavbarDropdown";
-import {logout} from "../../store/actions/user";
 import NavbarButton from "./NavbarButton";
+import NavbarLanguage from "./NavbarLanguage";
+import {t} from "../../helpers/I18n";
+import {useRedux} from "../../index";
 
-class Navbar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isVisible: true,
-            scrollY: 0,
-            isOpen: false
+const navbar = () => {
+
+    const [isVisible, setIsVisible] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const [position, setPosition] = useState(window.scrollY);
+
+    const [user, dispatch] = useRedux('user');
+
+    useEffect(() => {
+        if ((window.scrollY > position) && (window.scrollY > 200) && (isVisible)) {
+            setIsVisible(false);
+        } else if ((window.scrollY < position) && (!isVisible)) {
+            setIsVisible(true);
         }
-    }
+    }, [window.scrollY]);
 
-    componentWillMount() {
-        window.addEventListener('scroll', this.updateVisibility)
-    }
 
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.updateVisibility)
-    }
+    useEffect(() => {
+        const callback = () => {
+            setPosition((prevPosition) => {
+                const scrollLevel = Math.abs(window.scrollY - prevPosition);
+                return (scrollLevel > 30) ? window.scrollY : prevPosition;
+            });
+        };
+        window.addEventListener('scroll', callback);
+        return () => window.removeEventListener('scroll', callback);
+    }, []);
 
-    updateOpen = () => {
-        this.setState((prevState) => ({
-            isOpen: !prevState.isOpen
-        }));
+
+    const updateOpen = () => {
+        setIsOpen((prevIsOpen) => !prevIsOpen);
     };
 
-    closeMenu = () => {
-        this.setState({
-            isOpen: false
-        });
+    const closeMenu = () => {
+        setIsOpen(false);
     };
 
-    logoutAndClose = () => {
-        this.props.logout();
-        this.closeMenu();
+    const logoutAndClose = () => {
+        dispatch.logout();
+        closeMenu();
     };
 
-    updateVisibility = () => {
-        const scrollLevel = Math.abs(window.scrollY - this.state.scrollY);
-        if (scrollLevel > 30) {
-            if ((window.scrollY > this.state.scrollY) && (window.scrollY > 200) && (this.state.isVisible)) {
-                this.setState({
-                    isVisible: false,
-                })
-            } else if ((window.scrollY < this.state.scrollY) && (!this.state.isVisible)) {
-                this.setState({
-                    isVisible: true,
-                })
-            }
-            this.setState({
-                scrollY: window.scrollY
-            })
-        }
-    };
+    const navbarClasses = joinClasses(['navbar', 'is-fixed-top', isVisible ? null : 'is-rolled']);
+    const navbarMenuClasses = joinClasses(['navbar-menu', isOpen ? 'is-active' : null]);
 
-    render() {
-
-        const {isOpen, isVisible} = this.state;
-        const {user, logout} = this.props;
-        const navbarClasses = joinClasses(['navbar', 'is-fixed-top', isVisible ? null : 'is-rolled']);
-        const navbarMenuClasses = joinClasses(['navbar-menu', isOpen ? 'is-active' : null]);
-
-        return (
-            <nav className={navbarClasses} role="navigation" aria-label="main navigation">
-                <div className="container">
-                    <div className="navbar-brand">
-                        <NavbarBrand url={'/'}/>
-                        <NavbarBurger updateOpen={this.updateOpen} isOpen={isOpen}/>
-                    </div>
-                    <div className={navbarMenuClasses}>
-                        <div className="navbar-end">
-                            <NavbarItem name='Home' url={'/home'} closeMenu={this.closeMenu}/>
-                            <NavbarItem name='Else' url={'/else'} closeMenu={this.closeMenu}/>
-                            {user.isLoggedIn ? (
-                                <NavbarDropdown name={user.name} url={'/profile'}>
-                                    <NavbarItem name='My account' url={'/profile'} closeMenu={this.closeMenu}/>
-                                    <NavbarButton name='Logout' onClick={()=>console.log('asd')} closeMenu={this.logoutAndClose}/>
-                                </NavbarDropdown>
-                            ) : (
-                                <NavbarItem name='Login' url={'/login'} closeMenu={this.closeMenu}/>
-                            )}
-                            {!user.isLoggedIn && <NavbarItem name='Register' url={'/register'} closeMenu={this.closeMenu}/>}
-                        </div>
+    return (
+        <nav className={navbarClasses} role="navigation" aria-label="main navigation">
+            <div className="container">
+                <div className="navbar-brand">
+                    <NavbarBrand url={'/'}/>
+                    <NavbarBurger updateOpen={updateOpen} isOpen={isOpen}/>
+                </div>
+                <div className={navbarMenuClasses}>
+                    <div className="navbar-end">
+                        <NavbarItem name={t('navigation.home')} url={'/home'} closeMenu={closeMenu}/>
+                        <NavbarItem name='Else' url={'/else'} closeMenu={closeMenu}/>
+                        {user.isLoggedIn ? (
+                            <NavbarDropdown name={user.name} url={'/profile'}>
+                                <NavbarItem name='My account' url={'/profile'} closeMenu={closeMenu}/>
+                                <NavbarButton name='Logout' onClick={() => console.log('asd')}
+                                              closeMenu={logoutAndClose}/>
+                            </NavbarDropdown>
+                        ) : (
+                            <NavbarItem name='Login' url={'/login'} closeMenu={closeMenu}/>
+                        )}
+                        {!user.isLoggedIn &&
+                        <NavbarItem name='Register' url={'/register'} closeMenu={closeMenu}/>}
+                        <NavbarLanguage/>
                     </div>
                 </div>
-            </nav>
-        );
-    }
-}
-
-Navbar.propTypes = {
-    user: PropTypes.object
+            </div>
+        </nav>
+    );
 };
 
-const mapStateToProps = (state) => ({
-    user: state.user
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    logout: () => dispatch(logout())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default navbar;

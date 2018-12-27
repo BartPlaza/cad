@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, BrowserRouter} from 'react-router-dom'
 import AuthView from './components/Views/Auth';
 import RegisterView from './components/Views/Register';
 import ProfileView from "./components/Views/Profile";
@@ -10,6 +10,7 @@ import Navbar from "./components/Navigation/Navbar";
 import Footer from "./components/Footer/Footer";
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 import PrivateRoute from "./components/Routing/PrivateRoute";
+import {FormattedMessage} from "react-intl";
 
 class App extends Component {
     render() {

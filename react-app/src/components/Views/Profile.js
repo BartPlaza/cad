@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import {API} from "../API/config";
 import {useRedux} from "../../index";
+import {FormattedMessage} from "react-intl";
 
 const profileView = () => {
 

@@ -9,6 +9,7 @@ import App from './App';
 import TranslationProvider from './I18n/TranslationsProvider';
 import * as serviceWorker from './serviceWorker';
 import setUpActionDispatchers from './store/actions/actions';
+import {FormattedMessage} from "react-intl";
 
 const store = configureStore();
 const actions = setUpActionDispatchers(store);
