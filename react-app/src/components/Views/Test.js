@@ -1,46 +1,72 @@
-import React from 'react'
+import React, {useState, useEffect, useRef} from 'react';
+import Canvas from "./Canvas";
+import generateId from "./generateId";
 
-class TestView extends React.Component {
+const testView = () => {
+
+    //const canvas = useRef(null);
+
+    const [points, setPoints] = useState([]);
+    const [lines, setLines] = useState([]);
+    const [tempLine, setTempLine] = useState(null);
+    const [currentPoint, setCurrentPoint] = useState({
+        isSet: false,
+        position: null
+    });
 
 
-    render() {
-        return (
-            <div className="container">
-                <h1 className="title">To jest title</h1>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias architecto aspernatur at consequatur dolor error explicabo hic in incidunt ipsam laborum neque non odio perspiciatis, quo reprehenderit tempore veniam.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem beatae corporis dolorem fuga id, itaque iure iusto molestiae nihil nulla odit officia possimus quo reiciendis saepe tenetur, vel? Eum, nesciunt?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci cupiditate deserunt dicta esse eum facere, facilis fugiat harum, mollitia nam nostrum pariatur perspiciatis porro quam quisquam sapiente sunt tempore!
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, magnam tempora. Accusantium assumenda deleniti dolorum ea, eaque error et, illum impedit labore maxime perferendis quis reiciendis repellat ut vero voluptate.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores autem blanditiis doloribus eligendi expedita hic maiores modi neque non, numquam officia porro quae quibusdam quidem quis rem reprehenderit, voluptatum? Debitis?
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci aspernatur atque dicta dignissimos earum eos excepturi fugit incidunt iure modi neque nesciunt nisi possimus quidem repellendus, vel, voluptas voluptatibus!
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus blanditiis dolorem doloremque enim maxime nesciunt qui tempore ullam voluptas! Aperiam distinctio doloremque, ea earum exercitationem fugit quia quidem repudiandae voluptatibus!
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, alias animi consectetur distinctio est eum id iure, minima minus modi nemo nulla optio praesentium quisquam recusandae rerum sapiente, sequi voluptates.
-            </div>
-        )
-    }
+    const handleClick = (event, context) => {
+        event.persist();
+        if (currentPoint.isSet) {
+            const start = {id: generateId(), x: currentPoint.position.x, y: currentPoint.position.y};
+            const end = {id: generateId(), x: event.nativeEvent.layerX, y: event.nativeEvent.layerY};
+            setPoints((prevPoints) => prevPoints.concat([start, end]));
+            setLines((prevLines) => prevLines.concat([{id: generateId(), start: start.id, end: end.id}]));
+            setCurrentPoint({isSet: false, position: null});
+            setTempLine(null);
+        } else {
+            setCurrentPoint({
+                isSet: true,
+                position: {
+                    x: event.nativeEvent.layerX,
+                    y: event.nativeEvent.layerY
+                }
+            });
+        }
+    };
+
+    const drawTempLine = (event) => {
+        if (currentPoint.isSet) {
+            setTempLine({
+                start: {
+                    x: currentPoint.position.x,
+                    y: currentPoint.position.y
+                },
+                end: {
+                    x: event.nativeEvent.layerX,
+                    y: event.nativeEvent.layerY
+                }
+            });
+        }
+    };
+
+    const keyAction = (event) => {
+        if (event.keyCode === 27 && currentPoint.isSet) {
+            setCurrentPoint({
+                isSet: false,
+                position: null
+            });
+            setTempLine(null);
+        }
+    };
+
+    return (
+        <div className="container">
+            <Canvas points={points} tempLine={tempLine} lines={lines} clickHandler={handleClick} keyHandler={keyAction}
+                    mouseMoveHandler={drawTempLine}/>
+        </div>
+    )
+
 }
 
-export default TestView;
+export default testView;
