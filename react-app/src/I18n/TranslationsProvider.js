@@ -6,14 +6,13 @@ import PropTypes from 'prop-types';
 
 import en from 'react-intl/locale-data/en';
 import pl from 'react-intl/locale-data/pl';
-import flattenMessages from './flatenMessages';
 
 addLocaleData([...en, ...pl]);
 
 const translationsProvider = (props) => {
     const locale = translations.hasOwnProperty(props.locale) ? props.locale : 'pl';
     return (
-        <IntlProvider locale={locale} messages={flattenMessages(translations[locale])}>
+        <IntlProvider locale={locale} messages={translations[locale]}>
             {props.children}
         </IntlProvider>
     )
