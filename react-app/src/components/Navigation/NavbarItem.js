@@ -1,8 +1,6 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
-
 
 const navbarItem = (props) => {
     const {name, url, closeMenu} = props;
@@ -14,7 +12,7 @@ const navbarItem = (props) => {
 };
 
 navbarItem.propTypes = {
-    //name: intlShape.isRequired,
+    name: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     closeMenu: PropTypes.func
 };

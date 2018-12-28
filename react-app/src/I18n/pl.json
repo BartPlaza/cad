@@ -1,11 +1,11 @@
 {
-  "navigation": {
-    "home": "Strona główna",
-    "profile": "Profil",
-    "shop": "Shopp",
-    "test": "Ok"
-  },
-  "footer": "Footer",
-  "done": "Aooter",
-  "don": "Aooter"
+    "navigation": {
+        "home": "Home",
+        "profile": "Ser",
+        "shop": "Shopp",
+        "test": "Ok"
+    },
+    "footer": "Footer",
+    "done": "Aooter",
+    "don": "Aooter"
 }
