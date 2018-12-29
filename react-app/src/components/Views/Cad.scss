@@ -1,0 +1,15 @@
+#cad {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.sidebar {
+  background-color: black;
+  width: 400px;
+}
+
+.canvas {
+  display: flex;
+  flex: 1;
+}
