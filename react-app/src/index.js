@@ -17,14 +17,20 @@ configureApi(store);
 export const useRedux = (state) => {
     const [data, setData] = useState(store.getState()[state]);
 
-    useEffect(() => {
+    /*useEffect(() => {
+        console.log(data);
+
         const unsubscribe = store.subscribe(() => {
             setData(store.getState()[state]);
         });
 
         // Unsubscribe
         return unsubscribe();
-    });
+    },[]);*/
+
+    useEffect(() => {
+        setData(store.getState()[state]);
+    }, [store.getState()[state]]);
 
     return [data, actions[state]];
 };

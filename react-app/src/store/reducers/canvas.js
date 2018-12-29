@@ -2,7 +2,8 @@
 const initialState = {
     points: [],
     lines: [],
-    tempLine: []
+    tempLine: [],
+    tool: null
 };
 
 const canvasReducer = (state = initialState, action) => {

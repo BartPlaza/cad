@@ -40,9 +40,9 @@ const canvas = ({points, tempLine, lines, clickHandler, keyHandler, mouseMoveHan
             width={canvasSize.width}
             height={canvasSize.height}
             tabIndex="0"
-            onClick={(event) => clickHandler(event, context)}
-            onMouseMove={(event) => mouseMoveHandler(event, context)}
-            onKeyDown={(event) => keyHandler(event, context)}/>
+            onClick={clickHandler}
+            onMouseMove={mouseMoveHandler}
+            onKeyDown={keyHandler}/>
     )
 };
 
