@@ -14,13 +14,20 @@ const useCurrentPoint = () => {
     const checkCurrentPoint = (event) => {
         const x = event.layerX;
         const y = event.layerY;
+        let isSet = false;
 
-        setCurrentPoint(null);
         canvas.points.forEach((point) => {
             if (Math.abs(point.x - x) < 10 && Math.abs(point.y - y) < 10) {
-                setCurrentPoint(point);
+                isSet = true;
+                setCurrentPoint((prevCurrentPoint) => {
+                    return (prevCurrentPoint && prevCurrentPoint.id === point.id) ? prevCurrentPoint : point;
+                });
             }
         });
+
+        if(!isSet){
+            setCurrentPoint(null);
+        }
     };
 
     return currentPoint;
