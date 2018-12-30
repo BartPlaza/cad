@@ -4,7 +4,7 @@ const generatePoint = (x, y) => ({
     id: generateId(),
     x: x,
     y: y,
-    color: 'black'
+    isSelected: false
 });
 
 export default generatePoint
