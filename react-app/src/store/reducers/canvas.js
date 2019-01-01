@@ -14,6 +14,7 @@ const canvasReducer = (state = initialState, action) => {
 };
 
 const pointCanNotBeRemoved = (point, state) => {
+    console.log(point);
     return isUsedInLines(point.id, state.lines);
 };
 
@@ -27,12 +28,28 @@ const pointExists = (points, newPoint) => {
 
 const UsedInLines = (pointId, lines) => {
     return lines.filter((line) => {
-        return line.start.id === pointId || line.end.id === pointId;
+        return line.start === pointId || line.end === pointId;
     });
 };
 
 const isUsedInLines = (pointId, lines) => {
     return UsedInLines(pointId, lines).length > 0;
 };
+
+export const getPointX = (id, points) => {
+    let point = findById(id, points);
+    return point.x
+};
+
+export const getPointY = (id, points) => {
+    let point = findById(id, points);
+    return point.y
+};
+
+export const getPointLines = (id, lines) => {
+    return lines.filter((line) => line.start === id || line.end === id)
+};
+
+const findById = (id, items) => items.filter((item) => item.id === id)[0];
 
 export default canvasReducer

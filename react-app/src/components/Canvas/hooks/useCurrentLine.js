@@ -16,8 +16,10 @@ const useCurrentLine = () => {
         let isSet = false;
         canvas.lines.forEach((line) => {
             // const line = canvas.lines[0];
-            if(isNearest(x, y, line)){
-                const params = getEquationParams(line);
+            const start = canvas.points.filter((point) => line.start === point.id)[0];
+            const end = canvas.points.filter((point) => line.end === point.id)[0];
+            if(isNearest(x, y, {start, end})){
+                const params = getEquationParams({start, end});
                 const distance = getDistance(x, y, params);
                 if(distance < 15){
                     isSet = true;

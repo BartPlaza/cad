@@ -3,6 +3,8 @@ import './Canvas.scss';
 import lineDrawer from "./lineDrawer";
 import {connect} from "react-redux";
 import pointDrawer from "./pointDrawer";
+import tempLineDrawer from "./tempLineDrawer";
+import tempPointDrawer from "./tempPointDrawer";
 
 const canvas = ({points, tempLine, lines, clickHandler, keyHandler, mouseMoveHandler}) => {
 
@@ -15,21 +17,26 @@ const canvas = ({points, tempLine, lines, clickHandler, keyHandler, mouseMoveHan
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvasRef.current.getContext('2d');
-        context.strokeStyle = "white";
-        context.lineWidth = 2;
         context.clearRect(0, 0, canvas.width, canvas.height);
         drawAllLines()
     }, [points, lines, tempLine]);
 
     const drawAllPoints = (context) => {
-      points.forEach((point) => pointDrawer(context, point))
+        points.forEach((point) => pointDrawer(context, point));
+        if(currentPoint){
+            pointDrawer(context, currentPoint, 'green');
+        }
+        tempPoints.forEach((tempPoint) => tempPointDrawer(context, tempPoint));
     };
 
     const drawAllLines = (context) => {
-        lines.forEach((line) => lineDrawer(context, line));
-        if (tempLine) {
-            lineDrawer(context, tempLine)
+        lines.forEach((line) => lineDrawer(context, line, points));
+        if(currentLine){
+            lineDrawer(context, currentLine, points, 'green');
         }
+        tempLines.forEach((tempLine) => {
+            tempLineDrawer(context, tempLine)
+        });
     };
 
 
@@ -42,7 +49,9 @@ const canvas = ({points, tempLine, lines, clickHandler, keyHandler, mouseMoveHan
             tabIndex="0"
             onClick={clickHandler}
             onMouseMove={mouseMoveHandler}
-            onKeyDown={keyHandler}/>
+            onKeyDown={keyHandler}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}/>
     )
 };
 

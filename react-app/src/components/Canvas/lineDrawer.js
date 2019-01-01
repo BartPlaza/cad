@@ -1,11 +1,15 @@
-const lineDrawer = (context, line) => {
+const lineDrawer = (context, line, points, color) => {
 
-    if(line.isSelected){
+    const start = points.filter((point) => point.id === line.start)[0];
+    const end = points.filter((point) => point.id === line.end)[0];
+    context.lineWidth = 2;
+    context.strokeStyle = color ? color : 'white';
+    if (line.isSelected) {
         context.strokeStyle = 'red'
     }
     context.beginPath();
-    context.moveTo(line.start.x, line.start.y);
-    context.lineTo(line.end.x, line.end.y);
+    context.moveTo(start.x, start.y);
+    context.lineTo(end.x, end.y);
     context.stroke();
     context.closePath();
     context.strokeStyle = 'white'
