@@ -37,11 +37,9 @@ export const useRedux = (state) => {
 
 ReactDOM.render(
     <Provider store={store}>
-        <TranslationProvider>
             <BrowserRouter>
                 <App/>
             </BrowserRouter>
-        </TranslationProvider>
     </Provider>,
     document.getElementById('root')
 );

@@ -1,5 +1,6 @@
 import * as userActions from './user';
 import * as localeActions from './locale';
+import * as canvasActions from './canvas';
 
 const setUpActionDispatchers = (store) => ({
     'user': {
@@ -7,7 +8,14 @@ const setUpActionDispatchers = (store) => ({
         logout: () => store.dispatch(userActions.logout()),
         setToken: (token) => store.dispatch(userActions.setToken(token))
     },
-    'locale': localeActions
+    'locale': {
+         setLocale: (locale) => store.dispatch(localeActions.setLocale(locale))
+    },
+    'canvas': {
+        addPoint: (payload) => store.dispatch(canvasActions.addPoint(payload)),
+        addLine: (payload) => store.dispatch(canvasActions.addLine(payload)),
+        selectTool: (payload) => store.dispatch((canvasActions.selectTool(payload)))
+    }
 });
 
 export default setUpActionDispatchers;

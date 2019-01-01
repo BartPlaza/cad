@@ -6,7 +6,29 @@ import pointDrawer from "./pointDrawer";
 import tempLineDrawer from "./tempLineDrawer";
 import tempPointDrawer from "./tempPointDrawer";
 
-const canvas = ({points, tempLine, lines, clickHandler, keyHandler, mouseMoveHandler}) => {
+const canvas = (props) => {
+
+    const {
+        canvasState,
+        attachedPoint,
+        currentPoint, currentLine,
+        tempPoints, tempLines,
+        clickHandler, keyHandler, mouseMoveHandler, onMouseDown, onMouseUp
+    } = props;
+
+    const canvasRef = useRef(null);
+
+    const {points, lines} = canvasState;
+    const [canvas, setCanvas] = useState(null);
+    const [canvasSize, setCanvasSize] = useState({width: 0, height: 0});
+    const [context, setContext] = useState(null);
+
+    useEffect(() => {
+        setCanvasSize({
+            width: canvasRef.current.parentNode.clientWidth,
+            height: canvasRef.current.parentNode.clientHeight,
+        });
+    }, []);
 
     useEffect(() => {
         setCanvas(canvasRef.current);
@@ -18,8 +40,9 @@ const canvas = ({points, tempLine, lines, clickHandler, keyHandler, mouseMoveHan
         const canvas = canvasRef.current;
         const context = canvasRef.current.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
-        drawAllLines()
-    }, [points, lines, tempLine]);
+        drawAllLines(context);
+        drawAllPoints(context);
+    }, [canvas, tempPoints, tempLines, points, lines, currentPoint, currentLine, attachedPoint]);
 
     const drawAllPoints = (context) => {
         points.forEach((point) => pointDrawer(context, point));
@@ -38,7 +61,6 @@ const canvas = ({points, tempLine, lines, clickHandler, keyHandler, mouseMoveHan
             tempLineDrawer(context, tempLine)
         });
     };
-
 
     return (
         <canvas

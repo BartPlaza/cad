@@ -1,3 +1,4 @@
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     points: [],
@@ -8,6 +9,62 @@ const initialState = {
 
 const canvasReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.ADD_POINT:
+            return {
+                ...state,
+                points: pointExists(state.points, action.payload) ? state.points : state.points.concat([action.payload])
+            };
+        case actionTypes.MOVE_POINT:
+            const {id, x, y} = action.payload;
+            return {
+                ...state,
+                points: state.points.map((point) => point.id === id ? {...point, x: x, y: y} : point
+                )
+            };
+        case actionTypes.REMOVE_POINTS:
+            return {
+                ...state,
+                points: state.points.filter((point) => !action.payload.includes(point.id) || pointCanNotBeRemoved(point, state))
+            };
+        case actionTypes.ADD_LINE:
+            return {
+                ...state,
+                lines: state.lines.concat([action.payload])
+            };
+        case actionTypes.REMOVE_LINES:
+            return {
+                ...state,
+                lines: state.lines.filter((line) => !action.payload.includes(line.id))
+            };
+        case actionTypes.SELECT_TOOL:
+            return {
+                ...state,
+                tool: action.payload
+            };
+        case actionTypes.SELECT_POINT:
+            return {
+                ...state,
+                points: state.points.map((point) => {
+                    return point.id === action.payload ? {...point, isSelected: !point.isSelected} : point
+                })
+            };
+        case actionTypes.SELECT_LINE:
+            return {
+                ...state,
+                lines: state.lines.map((line) => {
+                    return line.id === action.payload ? {...line, isSelected: !line.isSelected} : line
+                })
+            };
+        case actionTypes.UNSELECT_ALL:
+            return {
+                ...state,
+                points: state.points.map((point) => {
+                    return {...point, isSelected: false}
+                }),
+                lines: state.lines.map((line) => {
+                    return {...line, isSelected: false}
+                })
+            };
         default:
             return state;
     }
