@@ -15,6 +15,11 @@ export const removePoints = (payload) => ({
     payload: payload
 });
 
+export const joinPoints = (payload) => ({
+    type: actionTypes.JOIN_POINTS,
+    payload: payload
+});
+
 export const addLine = (payload) => ({
     type: actionTypes.ADD_LINE,
     payload: payload

@@ -3,7 +3,7 @@ version: "3"
 services:
   node-service:
     image: node:10
-    container_name: node
+    container_name: node-cad
     volumes:
     - ./:/usr/src/react-boilerplate
     ports:

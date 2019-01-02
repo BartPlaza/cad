@@ -26,6 +26,24 @@ const canvasReducer = (state = initialState, action) => {
                 ...state,
                 points: state.points.filter((point) => !action.payload.includes(point.id) || pointCanNotBeRemoved(point, state))
             };
+        case actionTypes.JOIN_POINTS:
+            const {fromId, toId} = action.payload;
+            console.log(action.payload);
+            return {
+                ...state,
+                lines: state.lines.map((line) => {
+                    if(isUsedInLines(fromId, [line])){
+                        return {
+                            ...line,
+                            start: line.start === fromId ? toId : line.start,
+                            end: line.end === fromId ? toId : line.end,
+                        }
+                    } else {
+                        return line;
+                    }
+                }),
+                points: state.points.filter((point) => point.id !== fromId)
+            };
         case actionTypes.ADD_LINE:
             return {
                 ...state,

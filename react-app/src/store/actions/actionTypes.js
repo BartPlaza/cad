@@ -10,6 +10,7 @@ export const SET_LOCALE = 'SET_LOCALE';
 export const ADD_POINT = 'ADD_POINT';
 export const MOVE_POINT = 'MOVE_POINT';
 export const REMOVE_POINTS = 'REMOVE_POINTS';
+export const JOIN_POINTS = 'JOIN_POINTS';
 export const ADD_LINE = 'ADD_LINE';
 export const REMOVE_LINES = 'REMOVE_LINES';
 export const SELECT_TOOL = 'SELECT_TOOL';

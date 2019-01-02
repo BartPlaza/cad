@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Canvas from "../Canvas";
 import {connect} from "react-redux";
 import {
+    joinPoints,
     movePoint,
     removeLines,
     removePoints,
@@ -18,7 +19,7 @@ import {getPointLines, getPointX, getPointY} from "../../../store/reducers/canva
 
 const selectTool = (props) => {
 
-    const {points, lines, selectPoint, selectLine, unselectAll, removePoints, removeLines, movePoint} = props;
+    const {points, lines, selectPoint, selectLine, unselectAll, removePoints, removeLines, movePoint, joinPoints} = props;
     const currentPoint = useCurrentPoint();
     const currentLine = useCurrentLine();
     const [tempLines, setTempLines] = useState([]);
@@ -48,11 +49,15 @@ const selectTool = (props) => {
 
     const onMouseUp = (event) => {
         if (attachedPoint) {
-            movePoint({
-                id: attachedPoint.id,
-                x: event.nativeEvent.layerX,
-                y: event.nativeEvent.layerY
-            });
+            if (currentPoint) {
+                joinPoints({fromId: attachedPoint.id, toId: currentPoint.id});
+            } else {
+                movePoint({
+                    id: attachedPoint.id,
+                    x: event.nativeEvent.layerX,
+                    y: event.nativeEvent.layerY
+                });
+            }
             setAttachedPoint(null);
             setTempPoints([]);
             setTempLines([]);
@@ -123,7 +128,8 @@ const mapDispatchToProps = (dispatch) => ({
     unselectAll: (payload) => dispatch(unselectAll(payload)),
     removePoints: (payload) => dispatch(removePoints(payload)),
     removeLines: (payload) => dispatch(removeLines(payload)),
-    movePoint: (payload) => dispatch(movePoint(payload))
+    movePoint: (payload) => dispatch(movePoint(payload)),
+    joinPoints: (payload) => dispatch(joinPoints(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(selectTool);
