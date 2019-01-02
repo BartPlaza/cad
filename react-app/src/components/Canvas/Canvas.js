@@ -1,10 +1,10 @@
 import React, {useEffect, useState, useRef} from 'react';
 import './Canvas.scss';
-import lineDrawer from "./lineDrawer";
+import lineDrawer from "./drawers/lineDrawer";
 import {connect} from "react-redux";
-import pointDrawer from "./pointDrawer";
-import tempLineDrawer from "./tempLineDrawer";
-import tempPointDrawer from "./tempPointDrawer";
+import pointDrawer from "./drawers/pointDrawer";
+import tempLineDrawer from "./drawers/tempLineDrawer";
+import tempPointDrawer from "./drawers/tempPointDrawer";
 
 const canvas = (props) => {
 
