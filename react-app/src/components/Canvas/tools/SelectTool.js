@@ -49,9 +49,9 @@ const selectTool = (props) => {
 
     const onMouseUp = (event) => {
         if (attachedPoint) {
-            if (currentPoint) {
+            if (currentPoint && currentPoint.id !== attachedPoint.id) {
                 joinPoints({fromId: attachedPoint.id, toId: currentPoint.id});
-            } else {
+            } else if (!currentPoint){
                 movePoint({
                     id: attachedPoint.id,
                     x: event.nativeEvent.layerX,
