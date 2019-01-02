@@ -6,8 +6,9 @@ import generateLine from "../generators/generateLine";
 import useCurrentPoint from "../hooks/useCurrentPoint";
 import generateTempLine from "../generators/generateTempLine";
 
-const lineTool = () => {
+const lineTool = (props) => {
 
+    const {isMultiline} = props;
     const [, dispatch] = useRedux('canvas');
     const [tempLines, setTempLines] = useState([]);
     const [tempPoints, setTempPoints] = useState([]);
@@ -17,13 +18,15 @@ const lineTool = () => {
     const handleClick = (event) => {
         event.persist();
         if (startPoint) {
-            const end = currentPoint ? currentPoint : generatePoint(event.nativeEvent.layerX, event.nativeEvent.layerY);
-            dispatch.addPoint(startPoint);
-            dispatch.addPoint(end);
-            const line = generateLine(startPoint.id, end.id);
-            dispatch.addLine(line);
-            setStartPoint(null);
-            setTempLines([]);
+            const endPoint = currentPoint ? currentPoint : generatePoint(event.nativeEvent.layerX, event.nativeEvent.layerY);
+            if(startPoint.id !== endPoint.id){
+                dispatch.addPoint(startPoint);
+                dispatch.addPoint(endPoint);
+                const line = generateLine(startPoint.id, endPoint.id);
+                dispatch.addLine(line);
+                setStartPoint(isMultiline ? endPoint : null);
+                setTempLines([]);
+            }
         } else {
             setStartPoint(currentPoint ? currentPoint : generatePoint(event.nativeEvent.layerX, event.nativeEvent.layerY));
         }

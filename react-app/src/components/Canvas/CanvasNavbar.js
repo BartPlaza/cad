@@ -1,14 +1,11 @@
 import React from 'react';
 import './CanvasNavbar.scss'
-import {useRedux} from "../../index";
 import {joinClasses} from "../../helpers/functions";
 import * as tools from './consts/tools';
 import {selectTool} from "../../store/actions/canvas";
 import {connect} from "react-redux";
 
 const canvasNavbar = (props) => {
-
-    //const [canvas, dispatch] = useRedux('canvas');
 
     const {canvas, selectTool} = props;
 
