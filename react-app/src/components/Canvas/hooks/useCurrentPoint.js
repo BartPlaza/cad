@@ -1,23 +1,25 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import {useRedux} from "../../../index";
+import {getScale} from "../../../store/reducers/canvas";
 
 const useCurrentPoint = () => {
     const [currentPoint, setCurrentPoint] = useState(null);
-    const [canvas,] = useRedux('canvas');
+    const [canvasState,] = useRedux('canvas');
 
     useEffect(() => {
         document.addEventListener('mousemove', checkCurrentPoint);
         return () => document.removeEventListener('mousemove', checkCurrentPoint);
-    },[canvas]);
+    }, [canvasState]);
 
 
     const checkCurrentPoint = (event) => {
-        const x = event.layerX;
-        const y = event.layerY;
+        const scale = getScale(canvasState);
+        const x = event.layerX / scale;
+        const y = event.layerY / scale;
         let isSet = false;
 
-        canvas.points.forEach((point) => {
-            if (Math.abs(point.x - x) < 10 && Math.abs(point.y - y) < 10) {
+        canvasState.points.forEach((point) => {
+            if (Math.abs(point.x - x) < (10 / scale) && Math.abs(point.y - y) < (10 / scale)) {
                 isSet = true;
                 setCurrentPoint((prevCurrentPoint) => {
                     return (prevCurrentPoint && prevCurrentPoint.id === point.id) ? prevCurrentPoint : point;
@@ -25,7 +27,7 @@ const useCurrentPoint = () => {
             }
         });
 
-        if(!isSet){
+        if (!isSet) {
             setCurrentPoint(null);
         }
     };

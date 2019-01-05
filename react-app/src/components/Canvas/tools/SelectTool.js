@@ -7,7 +7,7 @@ import {
     removeLines,
     removePoints,
     selectLine,
-    selectPoint,
+    selectPoint, setScale,
     unselectAll
 } from "../../../store/actions/canvas";
 import useCurrentPoint from "../hooks/useCurrentPoint";
@@ -15,21 +15,16 @@ import useCurrentLine from "../hooks/useCurrentLine";
 import generatePoint from "../generators/generatePoint";
 import generateTempLine from "../generators/generateTempLine";
 import generateTempPoint from "../generators/generateTempPoint";
-import {getPointLines, getPointX, getPointY} from "../../../store/reducers/canvas";
+import {getPointLines, getPointX, getPointY, getScale} from "../../../store/reducers/canvas";
 
 const selectTool = (props) => {
 
-    const {points, lines, selectPoint, selectLine, unselectAll, removePoints, removeLines, movePoint, joinPoints} = props;
+    const {canvasState, points, lines, selectPoint, selectLine, unselectAll, removePoints, removeLines, movePoint, joinPoints, setScale} = props;
     const currentPoint = useCurrentPoint();
     const currentLine = useCurrentLine();
     const [tempLines, setTempLines] = useState([]);
     const [tempPoints, setTempPoints] = useState([]);
     const [attachedPoint, setAttachedPoint] = useState(null);
-
-    useEffect(() => {
-        console.log(currentPoint);
-    }, [currentPoint]);
-
 
     const handleClick = (event, context) => {
         if (currentPoint) {
@@ -52,10 +47,11 @@ const selectTool = (props) => {
             if (currentPoint && currentPoint.id !== attachedPoint.id) {
                 joinPoints({fromId: attachedPoint.id, toId: currentPoint.id});
             } else if (!currentPoint){
+                const scale = getScale(canvasState);
                 movePoint({
                     id: attachedPoint.id,
-                    x: event.nativeEvent.layerX,
-                    y: event.nativeEvent.layerY
+                    x: event.nativeEvent.layerX / scale,
+                    y: event.nativeEvent.layerY / scale
                 });
             }
             setAttachedPoint(null);
@@ -65,9 +61,10 @@ const selectTool = (props) => {
     };
 
     const mouseMove = (event) => {
+        const scale = getScale(canvasState);
         if (attachedPoint) {
             event.persist();
-            const tempPoint = generatePoint(event.nativeEvent.layerX, event.nativeEvent.layerY);
+            const tempPoint = generatePoint(event.nativeEvent.layerX / scale, event.nativeEvent.layerY / scale);
             setTempPoints([tempPoint]);
             setTempLines(recalculateLines(attachedPoint, tempPoint));
         }
@@ -120,6 +117,7 @@ const selectTool = (props) => {
 const mapStateToProps = (state) => ({
     points: state.canvas.points,
     lines: state.canvas.lines,
+    canvasState: state.canvas
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -129,7 +127,8 @@ const mapDispatchToProps = (dispatch) => ({
     removePoints: (payload) => dispatch(removePoints(payload)),
     removeLines: (payload) => dispatch(removeLines(payload)),
     movePoint: (payload) => dispatch(movePoint(payload)),
-    joinPoints: (payload) => dispatch(joinPoints(payload))
+    joinPoints: (payload) => dispatch(joinPoints(payload)),
+    setScale: (payload) => dispatch(setScale(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(selectTool);

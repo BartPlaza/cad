@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import pointDrawer from "./drawers/pointDrawer";
 import tempLineDrawer from "./drawers/tempLineDrawer";
 import tempPointDrawer from "./drawers/tempPointDrawer";
+import useScale from "./hooks/useScale";
 
 const canvas = (props) => {
 
@@ -23,6 +24,18 @@ const canvas = (props) => {
     const [canvasSize, setCanvasSize] = useState({width: 0, height: 0});
     const [context, setContext] = useState(null);
 
+    const [prevScale, scale] = useScale();
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const context = canvasRef.current.getContext('2d');
+        context.scale(1 / prevScale, 1 / prevScale);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.scale(scale, scale);
+        drawAllLines(context);
+        drawAllPoints(context);
+    }, [scale]);
+
     useEffect(() => {
         setCanvasSize({
             width: canvasRef.current.parentNode.clientWidth,
@@ -39,23 +52,23 @@ const canvas = (props) => {
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvasRef.current.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.clearRect(0, 0, canvas.width / scale, canvas.height / scale);
         drawAllLines(context);
         drawAllPoints(context);
     }, [canvas, tempPoints, tempLines, points, lines, currentPoint, currentLine, attachedPoint]);
 
     const drawAllPoints = (context) => {
         points.forEach((point) => pointDrawer(context, point));
-        if(currentPoint){
+        if (currentPoint) {
             pointDrawer(context, currentPoint, 'green');
         }
         tempPoints.forEach((tempPoint) => tempPointDrawer(context, tempPoint));
     };
 
     const drawAllLines = (context) => {
-        lines.forEach((line) => lineDrawer(context, line, points));
-        if(currentLine){
-            lineDrawer(context, currentLine, points, 'green');
+        lines.forEach((line) => lineDrawer(context, line));
+        if (currentLine) {
+            lineDrawer(context, currentLine, 'green');
         }
         tempLines.forEach((tempLine) => {
             tempLineDrawer(context, tempLine)

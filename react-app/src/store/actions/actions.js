@@ -14,7 +14,8 @@ const setUpActionDispatchers = (store) => ({
     'canvas': {
         addPoint: (payload) => store.dispatch(canvasActions.addPoint(payload)),
         addLine: (payload) => store.dispatch(canvasActions.addLine(payload)),
-        selectTool: (payload) => store.dispatch((canvasActions.selectTool(payload)))
+        selectTool: (payload) => store.dispatch((canvasActions.selectTool(payload))),
+        setScale: (payload) => store.dispatch((canvasActions.setScale(payload)))
     }
 });
 

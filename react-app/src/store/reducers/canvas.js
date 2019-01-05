@@ -4,7 +4,8 @@ const initialState = {
     points: [],
     lines: [],
     tempLine: [],
-    tool: null
+    tool: null,
+    scale: 1
 };
 
 const canvasReducer = (state = initialState, action) => {
@@ -28,11 +29,10 @@ const canvasReducer = (state = initialState, action) => {
             };
         case actionTypes.JOIN_POINTS:
             const {fromId, toId} = action.payload;
-            console.log(action.payload);
             return {
                 ...state,
                 lines: state.lines.map((line) => {
-                    if(isUsedInLines(fromId, [line])){
+                    if (isUsedInLines(fromId, [line])) {
                         return {
                             ...line,
                             start: line.start === fromId ? toId : line.start,
@@ -83,13 +83,23 @@ const canvasReducer = (state = initialState, action) => {
                     return {...line, isSelected: false}
                 })
             };
+        case actionTypes.SET_SCALE:
+            return {
+                ...state,
+                scale: action.payload
+            };
         default:
             return state;
     }
 };
 
+export const getScale = (state) => state.scale;
+
+export const getPoints = (state) => state.points;
+
+export const getLines = (state) => state.lines;
+
 const pointCanNotBeRemoved = (point, state) => {
-    console.log(point);
     return isUsedInLines(point.id, state.lines);
 };
 

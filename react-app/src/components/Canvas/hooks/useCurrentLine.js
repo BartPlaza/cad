@@ -1,27 +1,30 @@
 import {useState, useEffect} from 'react';
 import {useRedux} from "../../../index";
+import {getScale} from "../../../store/reducers/canvas";
 
 const useCurrentLine = () => {
     const [currentLine, setCurrentLine] = useState(null);
-    const [canvas,] = useRedux('canvas');
+    const [canvasState,] = useRedux('canvas');
+    const baseDistance = 15;
 
     useEffect(() => {
         document.addEventListener('mousemove', checkCurrentLine);
         return () => document.removeEventListener('mousemove', checkCurrentLine);
-    }, [canvas]);
+    }, [canvasState]);
 
     const checkCurrentLine = (event) => {
-        const x = event.layerX;
-        const y = event.layerY;
+        const scale = getScale(canvasState);
+        const x = event.layerX / scale;
+        const y = event.layerY / scale;
         let isSet = false;
-        canvas.lines.forEach((line) => {
+        canvasState.lines.forEach((line) => {
             // const line = canvas.lines[0];
-            const start = canvas.points.filter((point) => line.start === point.id)[0];
-            const end = canvas.points.filter((point) => line.end === point.id)[0];
+            const start = canvasState.points.filter((point) => line.start === point.id)[0];
+            const end = canvasState.points.filter((point) => line.end === point.id)[0];
             if(isNearest(x, y, {start, end})){
                 const params = getEquationParams({start, end});
                 const distance = getDistance(x, y, params);
-                if(distance < 15){
+                if(distance < baseDistance / scale){
                     isSet = true;
                     setCurrentLine((prevCurrentLine) => {
                         return (prevCurrentLine && prevCurrentLine.id === line.id) ? prevCurrentLine : line;

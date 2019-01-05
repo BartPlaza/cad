@@ -10,7 +10,7 @@ import TranslationProvider from './I18n/TranslationsProvider';
 import * as serviceWorker from './serviceWorker';
 import setUpActionDispatchers from './store/actions/actions';
 
-const store = configureStore();
+export const store = configureStore();
 const actions = setUpActionDispatchers(store);
 configureApi(store);
 
