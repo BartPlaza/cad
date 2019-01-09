@@ -1,14 +1,15 @@
 import {useEffect, useState} from 'react';
 import usePrevious from "../../../hooks/usePrevious";
 import {useRedux} from "../../../index";
+import {getScale} from "../../../store/reducers/camera";
 
 const useScale = () => {
-    const [canvasState, dispatch] = useRedux('canvas');
+    const [cameraState, dispatch] = useRedux('camera');
     const [scale, setScale] = useState(1);
     const prevScale = usePrevious(scale);
 
     useEffect(() => {
-        setScale(canvasState.scale);
+        setScale(getScale(cameraState));
         document.addEventListener('wheel', zoomAction);
         return () => document.removeEventListener('wheel', zoomAction);
     }, []);

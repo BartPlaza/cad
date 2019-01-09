@@ -6,6 +6,7 @@ import pointDrawer from "./drawers/pointDrawer";
 import tempLineDrawer from "./drawers/tempLineDrawer";
 import tempPointDrawer from "./drawers/tempPointDrawer";
 import useScale from "./hooks/useScale";
+import usePan from "./hooks/usePan";
 
 const canvas = (props) => {
 
@@ -20,21 +21,64 @@ const canvas = (props) => {
     const canvasRef = useRef(null);
 
     const {points, lines} = canvasState;
-    const [canvas, setCanvas] = useState(null);
     const [canvasSize, setCanvasSize] = useState({width: 0, height: 0});
-    const [context, setContext] = useState(null);
-
     const [prevScale, scale] = useScale();
+    const [prevPan, pan] = usePan();
 
     useEffect(() => {
-        const canvas = canvasRef.current;
-        const context = canvasRef.current.getContext('2d');
-        context.scale(1 / prevScale, 1 / prevScale);
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        context.setTransform(
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+        );
+
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.scale(scale, scale);
+        context.fillStyle = "red";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.transform(
+            scale,
+            0,
+            0,
+            scale,
+            pan.x,
+            pan.y
+        );
         drawAllLines(context);
         drawAllPoints(context);
     }, [scale]);
+
+    useEffect(() => {
+        console.log('pannn');
+        const canvas = canvasRef.current;
+        const context = canvasRef.current.getContext('2d');
+        context.setTransform(
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+        );
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "blue";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.transform(
+            scale,
+            0,
+            0,
+            scale,
+            pan.x,
+            pan.y
+        );
+        drawAllLines(context);
+        drawAllPoints(context);
+    }, [pan]);
+
 
     useEffect(() => {
         setCanvasSize({
@@ -43,19 +87,33 @@ const canvas = (props) => {
         });
     }, []);
 
-    useEffect(() => {
-        setCanvas(canvasRef.current);
-        const context = canvasRef.current.getContext('2d');
-        setContext(context);
-    }, []);
 
     useEffect(() => {
+
         const canvas = canvasRef.current;
         const context = canvasRef.current.getContext('2d');
-        context.clearRect(0, 0, canvas.width / scale, canvas.height / scale);
+        context.setTransform(
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+        );
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "green";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.transform(
+            scale,
+            0,
+            0,
+            scale,
+            pan.x,
+            pan.y
+        );
         drawAllLines(context);
         drawAllPoints(context);
-    }, [canvas, tempPoints, tempLines, points, lines, currentPoint, currentLine, attachedPoint]);
+    }, [tempPoints, tempLines, points, lines, currentPoint, currentLine, attachedPoint]);
 
     const drawAllPoints = (context) => {
         points.forEach((point) => pointDrawer(context, point));

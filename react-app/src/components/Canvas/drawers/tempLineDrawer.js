@@ -1,8 +1,8 @@
 import { store } from '../../../index'
-import {getScale} from "../../../store/reducers/canvas";
+import {getScale} from "../../../store/reducers/camera";
 
 const tempLineDrawer = (context, tempLine) => {
-    const scale = getScale(store.getState()['canvas']);
+    const scale = getScale(store.getState()['camera']);
     context.lineWidth = 1 / scale;
     context.strokeStyle = 'lightgrey';
     context.beginPath();

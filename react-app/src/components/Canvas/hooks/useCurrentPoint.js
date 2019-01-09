@@ -1,6 +1,8 @@
 import {useState, useEffect} from 'react';
 import {useRedux} from "../../../index";
-import {getScale} from "../../../store/reducers/canvas";
+import {getPan, getScale} from "../../../store/reducers/camera";
+import getMousePosition from "../helpers/getMousePosition";
+import getScaledValue from "../helpers/getScaledValue";
 
 const useCurrentPoint = () => {
     const [currentPoint, setCurrentPoint] = useState(null);
@@ -13,13 +15,11 @@ const useCurrentPoint = () => {
 
 
     const checkCurrentPoint = (event) => {
-        const scale = getScale(canvasState);
-        const x = event.layerX / scale;
-        const y = event.layerY / scale;
+        const {x,y} = getMousePosition(event.layerX, event.layerY);
         let isSet = false;
 
         canvasState.points.forEach((point) => {
-            if (Math.abs(point.x - x) < (10 / scale) && Math.abs(point.y - y) < (10 / scale)) {
+            if (Math.abs(point.x - x) < (getScaledValue(10)) && Math.abs(point.y - y) < (getScaledValue(10))) {
                 isSet = true;
                 setCurrentPoint((prevCurrentPoint) => {
                     return (prevCurrentPoint && prevCurrentPoint.id === point.id) ? prevCurrentPoint : point;

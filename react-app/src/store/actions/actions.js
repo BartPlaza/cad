@@ -1,6 +1,7 @@
 import * as userActions from './user';
 import * as localeActions from './locale';
 import * as canvasActions from './canvas';
+import * as cameraActions from './camera';
 
 const setUpActionDispatchers = (store) => ({
     'user': {
@@ -14,8 +15,11 @@ const setUpActionDispatchers = (store) => ({
     'canvas': {
         addPoint: (payload) => store.dispatch(canvasActions.addPoint(payload)),
         addLine: (payload) => store.dispatch(canvasActions.addLine(payload)),
-        selectTool: (payload) => store.dispatch((canvasActions.selectTool(payload))),
-        setScale: (payload) => store.dispatch((canvasActions.setScale(payload)))
+        selectTool: (payload) => store.dispatch((canvasActions.selectTool(payload)))
+    },
+    'camera': {
+        setScale: (payload) => store.dispatch((cameraActions.setScale(payload))),
+        setPan: (payload) => store.dispatch((cameraActions.setPan(payload))),
     }
 });
 

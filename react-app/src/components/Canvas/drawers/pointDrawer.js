@@ -1,8 +1,9 @@
 import { store } from '../../../index'
-import {getScale} from "../../../store/reducers/canvas";
+import {getScale} from "../../../store/reducers/camera";
 
 const pointDrawer = (context, point, color) => {
-    const scale = getScale(store.getState()['canvas']);
+
+    const scale = getScale(store.getState()['camera']);
     const size = 6 / scale;
     context.fillStyle = color ? color : 'black';
     if(point.isSelected){

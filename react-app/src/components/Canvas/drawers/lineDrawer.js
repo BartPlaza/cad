@@ -1,9 +1,11 @@
 import { store } from '../../../index'
-import {getPoints, getScale} from "../../../store/reducers/canvas";
+import {getPoints} from "../../../store/reducers/canvas";
+import {getScale} from "../../../store/reducers/camera";
 
 const lineDrawer = (context, line, color) => {
     const canvasState = store.getState()['canvas'];
-    const scale = getScale(canvasState);
+    const cameraState = store.getState()['camera'];
+    const scale = getScale(cameraState);
     const points = getPoints(canvasState);
     const start = points.filter((point) => point.id === line.start)[0];
     const end = points.filter((point) => point.id === line.end)[0];

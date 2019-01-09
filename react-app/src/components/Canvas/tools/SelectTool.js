@@ -7,19 +7,19 @@ import {
     removeLines,
     removePoints,
     selectLine,
-    selectPoint, setScale,
-    unselectAll
+    selectPoint, unselectAll
 } from "../../../store/actions/canvas";
 import useCurrentPoint from "../hooks/useCurrentPoint";
 import useCurrentLine from "../hooks/useCurrentLine";
 import generatePoint from "../generators/generatePoint";
 import generateTempLine from "../generators/generateTempLine";
 import generateTempPoint from "../generators/generateTempPoint";
-import {getPointLines, getPointX, getPointY, getScale} from "../../../store/reducers/canvas";
+import {getPointLines, getPointX, getPointY} from "../../../store/reducers/canvas";
+import {getScale} from "../../../store/reducers/camera";
 
 const selectTool = (props) => {
 
-    const {canvasState, points, lines, selectPoint, selectLine, unselectAll, removePoints, removeLines, movePoint, joinPoints, setScale} = props;
+    const {canvasState, points, lines, selectPoint, selectLine, unselectAll, removePoints, removeLines, movePoint, joinPoints} = props;
     const currentPoint = useCurrentPoint();
     const currentLine = useCurrentLine();
     const [tempLines, setTempLines] = useState([]);
@@ -127,8 +127,7 @@ const mapDispatchToProps = (dispatch) => ({
     removePoints: (payload) => dispatch(removePoints(payload)),
     removeLines: (payload) => dispatch(removeLines(payload)),
     movePoint: (payload) => dispatch(movePoint(payload)),
-    joinPoints: (payload) => dispatch(joinPoints(payload)),
-    setScale: (payload) => dispatch(setScale(payload))
+    joinPoints: (payload) => dispatch(joinPoints(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(selectTool);

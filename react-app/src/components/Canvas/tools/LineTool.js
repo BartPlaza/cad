@@ -5,22 +5,21 @@ import generatePoint from "../generators/generatePoint";
 import generateLine from "../generators/generateLine";
 import useCurrentPoint from "../hooks/useCurrentPoint";
 import generateTempLine from "../generators/generateTempLine";
-import {getScale} from "../../../store/reducers/canvas";
+import getMousePosition from "../helpers/getMousePosition";
 
 const lineTool = (props) => {
 
     const {isMultiline} = props;
-    const [canvasState, dispatch] = useRedux('canvas');
+    const [, dispatch] = useRedux('canvas');
     const [tempLines, setTempLines] = useState([]);
     const [tempPoints, setTempPoints] = useState([]);
     const [startPoint, setStartPoint] = useState(null);
     const currentPoint = useCurrentPoint();
 
     const handleClick = (event) => {
-        event.persist();
-        const scale = getScale(canvasState);
+        const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
         if (startPoint) {
-            const endPoint = currentPoint ? currentPoint : generatePoint(event.nativeEvent.layerX / scale, event.nativeEvent.layerY / scale);
+            const endPoint = currentPoint ? currentPoint : generatePoint(mousePosition.x, mousePosition.y);
             if(startPoint.id !== endPoint.id){
                 dispatch.addPoint(startPoint);
                 dispatch.addPoint(endPoint);
@@ -30,17 +29,14 @@ const lineTool = (props) => {
                 setTempLines([]);
             }
         } else {
-            setStartPoint(currentPoint ? currentPoint : generatePoint(event.nativeEvent.layerX /scale, event.nativeEvent.layerY / scale));
+            setStartPoint(currentPoint ? currentPoint : generatePoint(mousePosition.x, mousePosition.y));
         }
     };
 
     const mouseMove = (event) => {
-        const scale = getScale(canvasState);
-        const x = event.nativeEvent.layerX / scale;
-        const y = event.nativeEvent.layerY / scale;
-
         if (startPoint) {
-            const end = currentPoint ? currentPoint : generatePoint(x, y);
+            const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
+            const end = currentPoint ? currentPoint : generatePoint(mousePosition.x, mousePosition.y);
             const tempLine = generateTempLine(startPoint, end);
             setTempLines([tempLine]);
         }

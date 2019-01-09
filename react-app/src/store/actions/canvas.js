@@ -49,7 +49,3 @@ export const unselectAll = () => ({
     type: actionTypes.UNSELECT_ALL,
 });
 
-export const setScale = (payload) => ({
-    type: actionTypes.SET_SCALE,
-    payload: payload
-});

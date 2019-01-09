@@ -5,7 +5,6 @@ const initialState = {
     lines: [],
     tempLine: [],
     tool: null,
-    scale: 1
 };
 
 const canvasReducer = (state = initialState, action) => {
@@ -83,17 +82,10 @@ const canvasReducer = (state = initialState, action) => {
                     return {...line, isSelected: false}
                 })
             };
-        case actionTypes.SET_SCALE:
-            return {
-                ...state,
-                scale: action.payload
-            };
         default:
             return state;
     }
 };
-
-export const getScale = (state) => state.scale;
 
 export const getPoints = (state) => state.points;
 
