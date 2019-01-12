@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import usePrevious from "../../../hooks/usePrevious";
-import getMousePosition from "../helpers/getMousePosition";
 import {useRedux} from "../../../index";
 import {getPan, getScale} from "../../../store/reducers/camera";
 
@@ -9,7 +8,6 @@ const usePan = () => {
     const [cameraState, dispatch] = useRedux('camera');
     const [pan, setPan] = useState(getPan(cameraState));
     const [currentPan, setCurrentPan] = useState({x: 0, y: 0});
-    const prevPan = usePrevious(pan);
     const [isActive, setIsActive] = useState(false);
     const [startPoint, setStartPoint] = useState(null);
     const [mousePosition, setMousePosition] = useState(null);
@@ -67,7 +65,7 @@ const usePan = () => {
         }
     };
 
-    return [prevPan, pan];
+    return pan;
 };
 
 export default usePan;

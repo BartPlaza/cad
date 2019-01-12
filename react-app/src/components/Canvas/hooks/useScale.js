@@ -6,7 +6,6 @@ import {getScale} from "../../../store/reducers/camera";
 const useScale = () => {
     const [cameraState, dispatch] = useRedux('camera');
     const [scale, setScale] = useState(1);
-    const prevScale = usePrevious(scale);
 
     useEffect(() => {
         setScale(getScale(cameraState));
@@ -23,7 +22,7 @@ const useScale = () => {
         //const zoom = Math.exp(wheel * 0.2);
     };
 
-    return [prevScale, scale];
+    return scale;
 };
 
 export default useScale;

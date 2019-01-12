@@ -16,6 +16,7 @@ import generateTempLine from "../generators/generateTempLine";
 import generateTempPoint from "../generators/generateTempPoint";
 import {getPointLines, getPointX, getPointY} from "../../../store/reducers/canvas";
 import {getScale} from "../../../store/reducers/camera";
+import getMousePosition from "../helpers/getMousePosition";
 
 const selectTool = (props) => {
 
@@ -47,11 +48,11 @@ const selectTool = (props) => {
             if (currentPoint && currentPoint.id !== attachedPoint.id) {
                 joinPoints({fromId: attachedPoint.id, toId: currentPoint.id});
             } else if (!currentPoint){
-                const scale = getScale(canvasState);
+                const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
                 movePoint({
                     id: attachedPoint.id,
-                    x: event.nativeEvent.layerX / scale,
-                    y: event.nativeEvent.layerY / scale
+                    x: mousePosition.x,
+                    y: mousePosition.y
                 });
             }
             setAttachedPoint(null);
@@ -61,10 +62,9 @@ const selectTool = (props) => {
     };
 
     const mouseMove = (event) => {
-        const scale = getScale(canvasState);
         if (attachedPoint) {
-            event.persist();
-            const tempPoint = generatePoint(event.nativeEvent.layerX / scale, event.nativeEvent.layerY / scale);
+            const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
+            const tempPoint = generatePoint( mousePosition.x, mousePosition.y);
             setTempPoints([tempPoint]);
             setTempLines(recalculateLines(attachedPoint, tempPoint));
         }
