@@ -5,8 +5,23 @@ services:
     image: node:10
     container_name: node-cad
     volumes:
-    - ./:/usr/src/react-boilerplate
+      - ./:/usr/src/react-boilerplate
     ports:
-    - "3000:3000"
+      - "3000:3000"
     command: tail -F anything
     working_dir: /usr/src/react-boilerplate/react-app
+
+  #selenium-service:
+  #  build:
+  #    context: ./
+  #    dockerfile: selenium.docker
+  #  container_name: selenium-cad
+  #  volumes:
+  #    - ./selenium-tests/:/usr/src/selenium-tests
+  #  ports:
+  #    - "5900:5900"
+  #  command: tail -F anything
+  #  working_dir: /usr/src/selenium-tests
+    #depends_on:
+     # - node-service
+   # entrypoint: ./entry.sh

@@ -12,7 +12,7 @@ const canvasNavbar = (props) => {
     return (
         <div className="wrapper">
             {tools.asArray.map((tool) => {
-                let classes = joinClasses(['button', tool === canvas.tool ? 'is-primary' : null]);
+                let classes = joinClasses(['button', tool ,tool === canvas.tool ? 'is-primary' : null]);
                 return <div key={tool} className={classes} onClick={() => selectTool(tool)}>{tool}</div>
             })}
         </div>)

@@ -22,5 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.idea/
+selenium-tests/.idea
+selenium-tests/venv
+__pycache__/
 
+.idea/
