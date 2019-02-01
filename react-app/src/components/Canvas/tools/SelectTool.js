@@ -17,12 +17,14 @@ import generateTempPoint from "../generators/generateTempPoint";
 import {getPointLines, getPointX, getPointY} from "../../../store/reducers/canvas";
 import {getScale} from "../../../store/reducers/camera";
 import getMousePosition from "../helpers/getMousePosition";
+import useCurrentDimension from "../hooks/useCurrentDimension";
 
 const selectTool = (props) => {
 
     const {canvasState, points, lines, selectPoint, selectLine, unselectAll, removePoints, removeLines, movePoint, joinPoints} = props;
     const currentPoint = useCurrentPoint();
     const currentLine = useCurrentLine();
+    const currentDimension = useCurrentDimension();
     const [tempLines, setTempLines] = useState([]);
     const [tempPoints, setTempPoints] = useState([]);
     const [attachedPoint, setAttachedPoint] = useState(null);
@@ -47,7 +49,7 @@ const selectTool = (props) => {
         if (attachedPoint) {
             if (currentPoint && currentPoint.id !== attachedPoint.id) {
                 joinPoints({fromId: attachedPoint.id, toId: currentPoint.id});
-            } else if (!currentPoint){
+            } else if (!currentPoint) {
                 const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
                 movePoint({
                     id: attachedPoint.id,
@@ -64,7 +66,7 @@ const selectTool = (props) => {
     const mouseMove = (event) => {
         if (attachedPoint) {
             const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
-            const tempPoint = generatePoint( mousePosition.x, mousePosition.y);
+            const tempPoint = generatePoint(mousePosition.x, mousePosition.y);
             setTempPoints([tempPoint]);
             setTempLines(recalculateLines(attachedPoint, tempPoint));
         }
@@ -103,6 +105,7 @@ const selectTool = (props) => {
             attachedPoint={attachedPoint}
             currentPoint={currentPoint}
             currentLine={currentLine}
+            currentDimension={currentDimension}
             tempPoints={tempPoints}
             tempLines={tempLines}
             clickHandler={handleClick}

@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     points: [],
     lines: [],
-    tempLine: [],
+    relations: [],
+    dimensions: [],
     tool: null,
 };
 
@@ -14,13 +15,15 @@ const canvasReducer = (state = initialState, action) => {
                 ...state,
                 points: pointExists(state.points, action.payload) ? state.points : state.points.concat([action.payload])
             };
-        case actionTypes.MOVE_POINT:
+        case actionTypes.MOVE_POINT: {
             const {id, x, y} = action.payload;
+            console.log(action.payload);
             return {
                 ...state,
                 points: state.points.map((point) => point.id === id ? {...point, x: x, y: y} : point
                 )
-            };
+            }
+        }
         case actionTypes.REMOVE_POINTS:
             return {
                 ...state,
@@ -82,6 +85,40 @@ const canvasReducer = (state = initialState, action) => {
                     return {...line, isSelected: false}
                 })
             };
+        case actionTypes.ADD_RELATION:
+            return {
+                ...state,
+                relations: [
+                    ...state.relations,
+                    action.payload
+                ]
+            };
+        case actionTypes.ADD_DIMENSION:
+            return {
+                ...state,
+                dimensions: [
+                    ...state.dimensions,
+                    action.payload
+                ]
+            };
+        case actionTypes.UPDATE_DIMENSION: {
+            const {id, newDimension} = action.payload;
+            return {
+                ...state,
+                dimensions: state.dimensions.map((dimension) => {
+                    return dimension.id === id ? newDimension : dimension;
+                })
+            }
+        }
+        case actionTypes.UPDATE_RELATION: {
+            const {id, value} = action.payload;
+            return {
+                ...state,
+                relations: state.relations.map((relation) => {
+                    return relation.id === id ? {...relation, value: value} : relation;
+                })
+            }
+        }
         default:
             return state;
     }
@@ -89,7 +126,21 @@ const canvasReducer = (state = initialState, action) => {
 
 export const getPoints = (state) => state.points;
 
+export const getPointById = (state, id) => {
+    return state.points.filter((point) => point.id === id)[0];
+};
+
 export const getLines = (state) => state.lines;
+
+export const getDimensions = (state) => state.dimensions;
+
+export const getDimensionById = (state, id) => {
+    return state['dimensions'].filter((dimension) => dimension.id === id)[0];
+};
+
+export const getRelationById = (state, id) => {
+    return state.relations.filter((relation) => relation.id === id)[0];
+};
 
 const pointCanNotBeRemoved = (point, state) => {
     return isUsedInLines(point.id, state.lines);

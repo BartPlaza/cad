@@ -17,6 +17,10 @@ export const SELECT_TOOL = 'SELECT_TOOL';
 export const SELECT_POINT = 'SELECT_POINT';
 export const SELECT_LINE = 'SELECT_LINE';
 export const UNSELECT_ALL = 'UNSELECT_ALL';
+export const ADD_RELATION = 'ADD_RELATION';
+export const UPDATE_RELATION = 'UPDATE_RELATION';
+export const ADD_DIMENSION = 'ADD_DIMENSION';
+export const UPDATE_DIMENSION = 'UPDATE_DIMENSION';
 
 //camera
 export const SET_SCALE = 'SET_SCALE';

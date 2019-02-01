@@ -49,3 +49,23 @@ export const unselectAll = () => ({
     type: actionTypes.UNSELECT_ALL,
 });
 
+export const addRelation = (payload) => ({
+    type: actionTypes.ADD_RELATION,
+    payload: payload
+});
+
+export const updateRelation = (payload) => ({
+    type: actionTypes.UPDATE_RELATION,
+    payload: payload
+});
+
+export const addDimension = (payload) => ({
+    type: actionTypes.ADD_DIMENSION,
+    payload: payload
+});
+
+export const updateDimension = (payload) => ({
+    type: actionTypes.UPDATE_DIMENSION,
+    payload: payload
+});
+

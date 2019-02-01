@@ -1,0 +1,15 @@
+.canvas-input {
+  position: absolute;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 12pt;
+  letter-spacing: -0.05em;
+  padding: 2px;
+
+  &.dimension-error {
+    border: 2px solid darkred;
+    color: darkred;
+  }
+
+}
+

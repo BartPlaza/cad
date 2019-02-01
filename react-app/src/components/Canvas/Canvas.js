@@ -7,21 +7,27 @@ import tempLineDrawer from "./drawers/tempLineDrawer";
 import tempPointDrawer from "./drawers/tempPointDrawer";
 import useScale from "./hooks/useScale";
 import usePan from "./hooks/usePan";
+import dimensionDrawer from "./drawers/dimensionDrawer";
+import CanvasInput from "./CanvasInput";
 
 const canvas = (props) => {
 
     const {
         canvasState,
         attachedPoint,
-        currentPoint, currentLine,
+        currentPoint, currentLine, currentDimension,
         tempPoints, tempLines,
-        clickHandler, keyHandler, mouseMoveHandler, onMouseDown, onMouseUp
+        clickHandler, keyHandler, mouseMoveHandler, onMouseDown, onMouseUp,
     } = props;
 
     const canvasRef = useRef(null);
 
-    const {points, lines} = canvasState;
+    const {points, lines, dimensions} = canvasState;
     const [canvasSize, setCanvasSize] = useState({width: 0, height: 0});
+    const [input, setInput] = useState({
+        show: false,
+        dimension_id: null
+    });
     const scale = useScale();
     const pan = usePan();
 
@@ -37,10 +43,11 @@ const canvas = (props) => {
         const context = canvas.getContext('2d');
         clearCanvas(context);
         context.fillStyle = "red";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.clearRect(0, 0, canvas.width, canvas.height);
         scaleCanvas(context);
         drawAllLines(context);
         drawAllPoints(context);
+        drawAllDimensions(context);
     }, [scale]);
 
     useEffect(() => {
@@ -48,10 +55,11 @@ const canvas = (props) => {
         const context = canvasRef.current.getContext('2d');
         clearCanvas(context);
         context.fillStyle = "blue";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.clearRect(0, 0, canvas.width, canvas.height);
         scaleCanvas(context);
         drawAllLines(context);
         drawAllPoints(context);
+        drawAllDimensions(context);
     }, [pan]);
 
     useEffect(() => {
@@ -59,11 +67,12 @@ const canvas = (props) => {
         const context = canvasRef.current.getContext('2d');
         clearCanvas(context);
         context.fillStyle = "green";
-        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.clearRect(0, 0, canvas.width, canvas.height);
         scaleCanvas(context);
+        drawAllDimensions(context);
         drawAllLines(context);
         drawAllPoints(context);
-    }, [tempPoints, tempLines, points, lines, currentPoint, currentLine, attachedPoint]);
+    }, [tempPoints, tempLines, points, lines, currentPoint, currentLine, currentDimension, attachedPoint]);
 
     const clearCanvas = (context) => {
         context.setTransform(
@@ -98,7 +107,7 @@ const canvas = (props) => {
 
     const drawAllLines = (context) => {
         lines.forEach((line) => lineDrawer(context, line));
-        if (currentLine) {
+        if (currentLine && !currentPoint) {
             lineDrawer(context, currentLine, 'green');
         }
         tempLines.forEach((tempLine) => {
@@ -106,18 +115,53 @@ const canvas = (props) => {
         });
     };
 
+    const drawAllDimensions = (context) => {
+        dimensions.forEach((dimension) => dimensionDrawer(context, dimension));
+        if (currentDimension && !currentPoint && !currentLine) {
+            dimensionDrawer(context, currentDimension, 'green');
+        }
+    };
+
+    const style = {
+        cursor: (currentPoint || currentLine || currentDimension) ? 'pointer' : 'default'
+    };
+
+    const hideInput = () => {
+        setInput({
+            show: false,
+            dimension_id: null
+        });
+    };
+
+    const onDoubleClick = () => {
+        if (currentDimension) {
+            setInput({
+                show: true,
+                dimension_id: currentDimension.id
+            });
+        } else {
+            hideInput();
+        }
+    };
+
     return (
-        <canvas
-            ref={canvasRef}
-            id='canvas'
-            width={canvasSize.width}
-            height={canvasSize.height}
-            tabIndex="0"
-            onClick={clickHandler}
-            onMouseMove={mouseMoveHandler}
-            onKeyDown={keyHandler}
-            onMouseDown={onMouseDown}
-            onMouseUp={onMouseUp}/>
+        <React.Fragment>
+            <canvas
+                ref={canvasRef}
+                id='canvas'
+                width={canvasSize.width}
+                height={canvasSize.height}
+                tabIndex="0"
+                style={style}
+                onClick={clickHandler}
+                onMouseMove={mouseMoveHandler}
+                onKeyDown={keyHandler}
+                onMouseDown={onMouseDown}
+                onMouseUp={onMouseUp}
+                onDoubleClick={onDoubleClick}
+            />
+            {input.show && <CanvasInput dimensionId={input.dimension_id} hideAction={hideInput}/>}
+        </React.Fragment>
     )
 };
 

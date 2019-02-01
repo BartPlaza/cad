@@ -6,6 +6,7 @@ import * as tools from "../Canvas/consts/tools";
 import {connect} from "react-redux";
 import SelectTool from "../Canvas/tools/SelectTool";
 import MultiLineTool from "../Canvas/tools/MultiLineTool";
+import DimensionTool from "../Canvas/tools/DimensionTool";
 
 const cadView = (props) => {
 
@@ -14,7 +15,8 @@ const cadView = (props) => {
     const toolsMap = {
         [tools.LINE]: <LineTool/>,
         [tools.SELECT]: <SelectTool/>,
-        [tools.MULTILINE]: <MultiLineTool/>
+        [tools.MULTILINE]: <MultiLineTool/>,
+        [tools.DIMENSION]: <DimensionTool/>
     };
 
     const renderCanvasForTool = (tool) => {

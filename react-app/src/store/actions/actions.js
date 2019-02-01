@@ -15,7 +15,11 @@ const setUpActionDispatchers = (store) => ({
     'canvas': {
         addPoint: (payload) => store.dispatch(canvasActions.addPoint(payload)),
         addLine: (payload) => store.dispatch(canvasActions.addLine(payload)),
-        selectTool: (payload) => store.dispatch((canvasActions.selectTool(payload)))
+        selectTool: (payload) => store.dispatch(canvasActions.selectTool(payload)),
+        addRelation: (payload) => store.dispatch(canvasActions.addRelation(payload)),
+        addDimension: (payload) => store.dispatch(canvasActions.addDimension(payload)),
+        updateDimension: (payload) => store.dispatch(canvasActions.updateDimension(payload)),
+        updateRelation: (payload) => store.dispatch(canvasActions.updateRelation(payload)),
     },
     'camera': {
         setScale: (payload) => store.dispatch((cameraActions.setScale(payload))),
