@@ -1,4 +1,4 @@
-const Translator = require('./Translator');
+const Translator = required('./Translator');
 
 
 const params = process.argv;

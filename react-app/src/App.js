@@ -23,7 +23,7 @@ class App extends Component {
                                 <Switch location={location}>
                                     <Route path='/login' component={AuthView}/>
                                     <Route path='/register' component={RegisterView}/>
-                                    <PrivateRoute path='/else' component={TestView}/>
+                                    <Route path='/else' component={TestView}/>
                                     <PrivateRoute path='/profile' component={ProfileView}/>
                                     <Route path='/something_went_wrong' component={ErrorView}/>
                                 </Switch>

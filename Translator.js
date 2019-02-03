@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = required('fs');
 
 class Translator {
     constructor() {
