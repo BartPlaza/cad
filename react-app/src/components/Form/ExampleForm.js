@@ -7,6 +7,7 @@ import BulmaSelect from "./Bulma/BulmaSelect";
 import BulmaCheckbox from "./Bulma/BulmaCheckbox";
 import Button from "./Button";
 import SubmitButton from "./SubmitButton";
+import Dropdown from "./Dropdown/Dropdown";
 
 const ExampleForm = props => {
 
@@ -14,6 +15,10 @@ const ExampleForm = props => {
 
     const onSubmit = () => {
         alert('submit');
+    };
+
+    const setInput = () => {
+        console.log('now');
     };
 
     return (
@@ -30,6 +35,7 @@ const ExampleForm = props => {
                         form={form}
                         name="select"
                         render={(props) => <BulmaSelect {...props} options={options}/>}
+                        onChange={setInput}
                     />
                     <Field
                         form={form}
@@ -43,6 +49,9 @@ const ExampleForm = props => {
                     />
                 </div>
             }/>
+
+            <Dropdown/>
+
         </div>
     );
 };

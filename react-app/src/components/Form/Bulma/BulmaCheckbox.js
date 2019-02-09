@@ -9,7 +9,7 @@ const BulmaCheckbox = props => {
         <div className="field">
             <div className="control">
                 <label className="checkbox" disabled={disabled}>
-                    <input type="checkbox" name={name} onChange={onChange} disabled={disabled} checked={value}/>
+                    <input type="checkbox" name={name} onChange={onChange} disabled={disabled} checked={value || false}/>
                     {name}
                 </label>
             </div>

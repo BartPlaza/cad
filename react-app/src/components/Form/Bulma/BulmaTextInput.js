@@ -12,7 +12,7 @@ const BulmaTextInput = (props) => {
                 {name}
             </div>
             <div className="control">
-                <input className={classNames} type="text" value={value} onChange={onChange} name={name} disabled={disabled}/>
+                <input className={classNames} type="text" value={value || ''} onChange={onChange} name={name} disabled={disabled}/>
             </div>
             {error && <BulmaError error={error}/>}
         </div>

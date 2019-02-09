@@ -9,6 +9,12 @@ class Field extends Component {
         validate && form.setValidator(name, validate);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.onChange) {
+            this.props.onChange();
+        }
+    }
+
     render() {
         const {form, name, disabled, render, defaultValue} = this.props;
         const props = {
@@ -19,7 +25,7 @@ class Field extends Component {
             disabled: disabled,
             defaultValue: defaultValue
         };
-        return render(props)
+        return render(props);
     }
 }
 
