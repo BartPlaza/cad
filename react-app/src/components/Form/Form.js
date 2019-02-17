@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import validators from './Validators/validators';
 import './Form.scss';
 
-class Form extends Component {
+class Form extends React.Component {
     state = {
         fields: {},
         validators: {},

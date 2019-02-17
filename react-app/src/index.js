@@ -21,10 +21,9 @@ export const useRedux = (state) => {
         const unsubscribe = store.subscribe(() => {
             setData(store.getState()[state]);
         });
-
         // Unsubscribe
-        return unsubscribe();
-    });
+        return () => unsubscribe();
+    },[]);
 
     return [data, actions[state]];
 };

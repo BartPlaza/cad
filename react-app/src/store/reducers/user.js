@@ -28,6 +28,11 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 token: action.token
             };
+        case actionTypes.SAVE_FORM:
+            return {
+                ...state,
+                form: action.payload
+            };
         default:
             return state;
     }

@@ -1,4 +1,4 @@
-const fs = required('fs');
+const fs = notEmpty('fs');
 
 class Translator {
     constructor() {

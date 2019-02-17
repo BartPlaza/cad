@@ -5,7 +5,8 @@ const setUpActionDispatchers = (store) => ({
     'user': {
         login: (payload) => store.dispatch(userActions.login(payload)),
         logout: () => store.dispatch(userActions.logout()),
-        setToken: (token) => store.dispatch(userActions.setToken(token))
+        setToken: (token) => store.dispatch(userActions.setToken(token)),
+        saveForm: (payload) => store.dispatch(userActions.saveForm(payload))
     },
     'locale': localeActions
 });

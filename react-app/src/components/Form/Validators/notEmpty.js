@@ -1,0 +1,1 @@
+export default (value) => value.trim().length > 0 ? null : 'not empty error';

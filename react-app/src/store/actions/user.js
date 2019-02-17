@@ -13,3 +13,8 @@ export const setToken = (token) => ({
     type: actionTypes.SET_TOKEN,
     token
 });
+
+export const saveForm = (payload) => ({
+    type: actionTypes.SAVE_FORM,
+    payload
+});

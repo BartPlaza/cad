@@ -1,13 +1,12 @@
 import React from 'react'
-import ExampleForm from "../Form/ExampleForm";
-
+import AnyForm from '../Form/anyForm'
 class TestView extends React.Component {
 
 
     render() {
         return (
             <div className="container">
-                <ExampleForm/>
+                <AnyForm/>
             </div>
         )
     }

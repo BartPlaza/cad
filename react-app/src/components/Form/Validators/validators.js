@@ -1,5 +1,7 @@
-import required from './required';
+import notEmpty from './notEmpty';
+import maxLength from './maxLength';
 
 export default {
-    required
+    notEmpty: notEmpty,
+    maxLength: maxLength,
 };

@@ -4,7 +4,7 @@ import {joinClasses} from "../../../helpers/functions";
 import BulmaError from "./BulmaError";
 
 const BulmaSelect = (props) => {
-    const {options, name, onChange, defaultValue, error} = props;
+    const {options, field: {name, onChange, value, error, ref}} = props;
     const classNames = joinClasses(['select', error ? 'is-danger' : null]);
     return (
         <div className="field">
@@ -13,8 +13,8 @@ const BulmaSelect = (props) => {
             </div>
             <div className="control">
                 <div className={classNames}>
-                    <select name={name} onChange={onChange}>
-                        {!defaultValue && <option value="" hidden/>}
+                    <select name={name} onChange={onChange} value={value} ref={ref}>
+                        {value === '' && <option value="" hidden/>}
                         {options.map((option) =>
                             <option key={option.value} value={option.value}>{option.name}</option>
                         )}

@@ -1,0 +1,1 @@
+export default (length) => (value) => value.trim().length < length ? null : `excited max length (${length})`;

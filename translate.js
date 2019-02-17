@@ -1,4 +1,4 @@
-const Translator = required('./Translator');
+const Translator = notEmpty('./Translator');
 
 
 const params = process.argv;
