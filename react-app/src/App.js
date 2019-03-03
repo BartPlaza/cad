@@ -5,6 +5,7 @@ import RegisterView from './components/Views/Register';
 import ProfileView from "./components/Views/Profile";
 import CadView from "./components/Views/Cad";
 import ErrorView from "./components/Views/Error";
+import ElseView from "./components/Views/TestForm";
 import './App.scss';
 import Navbar from "./components/Navigation/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -25,6 +26,7 @@ class App extends Component {
                                     <Switch location={location}>
                                         <Route path='/login' component={AuthView}/>
                                         <Route path='/register' component={RegisterView}/>
+                                        <Route path='/else' component={ElseView}/>
                                         <PrivateRoute path='/profile' component={ProfileView}/>
                                         <Route path='/something_went_wrong' component={ErrorView}/>
                                     </Switch>
