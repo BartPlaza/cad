@@ -1,7 +1,7 @@
 import React from 'react';
 import './CanvasNavbar.scss'
 import {joinClasses} from "../../helpers/functions";
-import * as tools from './consts/tools';
+import * as tools from './constants/tools';
 import {selectTool} from "../../store/actions/canvas";
 import {connect} from "react-redux";
 

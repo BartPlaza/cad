@@ -2,7 +2,7 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  background-color: grey;
+  background-color: white;
 }
 
 .canvasSidebar {
@@ -20,8 +20,9 @@
   background-color: black;
 }
 
-.canvas {
+#workspace {
   display: flex;
   flex: 1;
   position: relative;
+  background-color: gray;
 }

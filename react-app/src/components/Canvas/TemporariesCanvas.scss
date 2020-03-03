@@ -1,8 +1,7 @@
-#canvas {
+#temporaries-canvas {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 2;
-  color: white;
   background-color: transparent;
+  z-index: 1;
 }
