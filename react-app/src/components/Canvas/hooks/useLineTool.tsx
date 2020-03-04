@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Tool} from "../services/ToolService";
 import {ToolTypes} from "../constants/tools";
 import generatePoint, {Point} from "../generators/generatePoint";
@@ -8,20 +8,20 @@ import {useDispatch} from "react-redux";
 import getMousePosition from "../helpers/getMousePosition";
 import generateTempLine from "../generators/generateTempLine";
 import {setTempLines} from "../../../store/actions/temporaries";
+import useCurrentPoint from "./useCurrentPoint";
 
 
 const LineTool = (): Tool => {
 
     const dispatch = useDispatch();
     const [startPoint, setStartPoint] = useState<Point | null>(null);
-
-    const currentPoint = null;
+    const currentPoint = useCurrentPoint();
 
     const onClick = (event: React.MouseEvent) => {
         //@ts-ignore
         const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
         if (startPoint) {
-            const endPoint = generatePoint(mousePosition.x, mousePosition.y);
+            const endPoint = currentPoint || generatePoint(mousePosition.x, mousePosition.y);
             if(startPoint.id !== endPoint.id){
                 dispatch(addPoint(startPoint));
                 dispatch(addPoint(endPoint));
@@ -31,7 +31,7 @@ const LineTool = (): Tool => {
                 dispatch(setTempLines([]));
             }
         } else {
-            setStartPoint(currentPoint ? currentPoint : generatePoint(mousePosition.x, mousePosition.y));
+            setStartPoint(currentPoint || generatePoint(mousePosition.x, mousePosition.y));
         }
     };
 
@@ -39,7 +39,7 @@ const LineTool = (): Tool => {
         if (startPoint) {
             //@ts-ignore
             const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
-            const tempEndPoint = generatePoint(mousePosition.x, mousePosition.y);
+            const tempEndPoint = currentPoint || generatePoint(mousePosition.x, mousePosition.y);
             const tempLine = generateTempLine(startPoint, tempEndPoint);
             dispatch(setTempLines([tempLine]));
         }

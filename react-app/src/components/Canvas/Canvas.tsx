@@ -13,6 +13,7 @@ const Canvas: React.FunctionComponent = () => {
     const canvasSize = useCanvasSize(canvasRef);
     const {name, onClick, onMouseMove} = useToolContext();
 
+    console.log('Canvas render');
     console.log('Current tool is: ', name);
 
     useEffect(() => {

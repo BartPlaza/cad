@@ -11,7 +11,7 @@ const TemporariesCanvas = () => {
     const {canvasRef, drawAll} = useTemporariesContext();
     const canvasSize = useCanvasSize(canvasRef);
 
-    console.log('render here', canvasSize);
+    console.log('TemporariesCanvas render');
 
     useEffect(() => {
         drawAll(temporariesState);
