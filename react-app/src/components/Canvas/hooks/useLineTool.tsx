@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Tool} from "../services/ToolService";
 import {ToolTypes} from "../constants/tools";
 import generatePoint, {Point} from "../generators/generatePoint";
@@ -7,9 +7,8 @@ import {addLine, addPoint} from "../../../store/actions/canvas";
 import {useDispatch} from "react-redux";
 import getMousePosition from "../helpers/getMousePosition";
 import generateTempLine from "../generators/generateTempLine";
-import {setTempLines} from "../../../store/actions/temporaries";
+import {setTempLines, setTempPoints} from "../../../store/actions/temporaries";
 import useCurrentPoint from "./useCurrentPoint";
-
 
 const LineTool = (): Tool => {
 
@@ -29,19 +28,25 @@ const LineTool = (): Tool => {
                 dispatch(addLine(line));
                 setStartPoint(null);
                 dispatch(setTempLines([]));
+                dispatch(setTempPoints([]));
             }
         } else {
-            setStartPoint(currentPoint || generatePoint(mousePosition.x, mousePosition.y));
+            const startPoint = currentPoint || generatePoint(mousePosition.x, mousePosition.y);
+            setStartPoint(startPoint);
+            dispatch(setTempPoints([startPoint]));
         }
     };
 
     const onMouseMove = (event: React.MouseEvent) => {
+        //@ts-ignore
+        const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
+        const tempPoint = currentPoint || generatePoint(mousePosition.x, mousePosition.y);
         if (startPoint) {
-            //@ts-ignore
-            const mousePosition = getMousePosition(event.nativeEvent.layerX, event.nativeEvent.layerY);
-            const tempEndPoint = currentPoint || generatePoint(mousePosition.x, mousePosition.y);
-            const tempLine = generateTempLine(startPoint, tempEndPoint);
+            const tempLine = generateTempLine(startPoint, tempPoint);
+            dispatch(setTempPoints([startPoint, tempPoint]));
             dispatch(setTempLines([tempLine]));
+        } else {
+            dispatch(setTempPoints([tempPoint]));
         }
     };
 

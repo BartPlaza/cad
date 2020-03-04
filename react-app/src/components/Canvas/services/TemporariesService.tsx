@@ -4,6 +4,9 @@ import {TemporariesContextProps, TemporariesContextProvider} from "../context/te
 import {TempLine} from "../generators/generateTempLine";
 import tempLineDrawer from "../drawers/tempLineDrawer";
 import {TemporariesState} from "../../../store/reducers/temporaries";
+import pointDrawer from "../drawers/pointDrawer";
+import tempPointDrawer from "../drawers/tempPointDrawer";
+import {Point} from "../generators/generatePoint";
 
 const TemporariesService: React.FunctionComponent = ({children}) => {
     const canvasRef: React.Ref<HTMLCanvasElement> = useRef(null);
@@ -29,9 +32,14 @@ const TemporariesService: React.FunctionComponent = ({children}) => {
         tempLines.forEach((tempLine) => tempLineDrawer(canvasRef, tempLine));
     };
 
+    const drawTempPoints = (tempPoints: Point[]) => {
+        tempPoints.forEach((point) => tempPointDrawer(canvasRef, point));
+    };
+
     const drawAll = (temporariesState: TemporariesState):void => {
         clearAll();
         drawTempLines(temporariesState.lines);
+        drawTempPoints(temporariesState.points);
     };
 
     const context: TemporariesContextProps = {

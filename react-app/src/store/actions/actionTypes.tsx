@@ -23,6 +23,7 @@ export const UPDATE_DIMENSION = 'UPDATE_DIMENSION';
 export const SELECT_TOOL = 'SELECT_TOOL';
 
 //temporaries
+export const SET_TEMP_POINTS = 'SET_TEMP_POINTS';
 export const SET_TEMP_LINES = 'SET_TEMP_LINES';
 
 //camera

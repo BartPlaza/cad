@@ -37,8 +37,8 @@ const CanvasService: React.FunctionComponent = ({children}) => {
 
     const drawAll = (canvasState: CanvasState):void => {
         clearAll();
-        drawPoints(canvasState.points);
         drawLines(canvasState.lines);
+        drawPoints(canvasState.points);
     };
 
     const context: CanvasContextProps = {
